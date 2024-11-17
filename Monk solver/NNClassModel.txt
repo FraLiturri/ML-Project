@@ -1,0 +1,133 @@
+#include <iostream>
+
+
+
+class InputLayer
+{
+	public:
+		InputLater(){}
+		InputLayer(int NumNodes):
+			NumNodes_1(NumNodes){}
+		int NumNode(){return NumNodes_1}
+	private:
+		int NumNodes_1
+};
+
+
+
+
+template<class T>
+class Layer
+{
+	public:
+		Layer()
+		Layer(int NumNodes, T *LayerPrecedente);
+			NumNodes_1(NumNodes), PrevLayer(LayerPrecedente) {}
+			
+			
+		Matrice BackPropagation
+	
+	
+	
+	private:
+		int NumNodes_1;
+		T *PrevLayer;
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+class MLP
+{
+	public:
+		MLP(){}
+		MLP(InputLayer *a, Layer *Output):
+					
+		
+		MLP
+		
+		void tra)
+		{
+		
+		
+		
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	private:
+		std::vector<Layer *>
+
+}
+
+
+
+
+
+
+MLP sempronio(3, 2, [3.4.5], )
+
+
+
+
+/*main
+*/
+
+std::vector<int> Dati;
+
+InputLayer *a = new InputLayer(std::size(Dati));
+Layer *b = new Layer(16, a);
+Layer *c = new Layer(16, b);
+Layer *output = new Layer(2, c);
+
+MLP *Modello = new Modello()
+
+
+Modello.train();
+
+Modello.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
