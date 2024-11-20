@@ -111,4 +111,27 @@ public:
     virtual Layer *GoToPrevLayer() const override { return 0; };
 };
 
+
+class MLP
+{
+    public:
+        MLP(Layer *I, Layer *O):
+        InputLayer(I), OutputLayer(O){}
+
+        Train()
+        {
+            
+
+
+        }
+
+
+    private:
+        Layer *InputLayer;
+        Layer *OutputLayer;
+
+
+}
+
+
 #endif
