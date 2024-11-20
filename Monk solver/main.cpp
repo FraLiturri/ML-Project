@@ -19,6 +19,7 @@ int main()
     //! Neural network construction;
     input_Layer Input_Layer({1,2,3,4,5,6});
     hidden_Layer First_hidden("threshold", {1,2,3,4}, 1, true); 
+    
     First_hidden.GoToPrevLayer();
 
     // Printing config. info:

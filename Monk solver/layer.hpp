@@ -116,22 +116,18 @@ class MLP
 {
     public:
         MLP(Layer *I, Layer *O):
-        InputLayer(I), OutputLayer(O){}
+        InputLayer(I), OutputLayer(O){}; 
 
-        Train()
+        void Train()
         {
-            
-
-
+           cout << "works!" ; 
         }
-
-
+        Layer *getter(){
+            return InputLayer; 
+        };
     private:
         Layer *InputLayer;
         Layer *OutputLayer;
-
-
-}
-
+};
 
 #endif
