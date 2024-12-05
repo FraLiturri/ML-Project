@@ -4,7 +4,7 @@
 #include "layer.hpp"
 #include "demiurge.hpp"
 #include "activation_functions.hpp"
-#include "C:/Users/franc/OneDrive/Desktop/Sync/Eigen/Eigen/Dense"
+#include "/home/calisse/Eigen/Eigen/Dense"
 
 #include <iostream>
 #include <vector>

@@ -2,13 +2,15 @@
 #include "activation_functions.hpp"
 #include "info.hpp"
 #include "training.hpp"
-
 #include <iostream>
 #include <string>
 #include <random>
 #include <chrono>
-
-#include "C:/Users/franc/OneDrive/Desktop/Sync/Eigen/Eigen/Dense"
+#include <fstream>
+#include <sstream>
+#include <iterator>
+#include<algorithm>
+#include "/home/calisse/Eigen/Eigen/Dense"
 
 using namespace Eigen;
 using namespace std;
@@ -18,11 +20,13 @@ int main()
     // Counter starts;
     auto start = chrono::high_resolution_clock::now();
 
-    std::string fileinput = "path.txt" std::string line; // declaring the std::string that will act as a placeholder for each line of the file
+    std::string fileinput = "Monk_data/monks-1.train";
+    std::string line; // declaring the std::string that will act as a placeholder for each line of the file
     std::ifstream myfile_in(fileinput);
-    std::vector<int, 6> Placeholder;
-    std::vector<std::vector<int, 6>> Inputs;
+    std::vector<int> Placeholder(6);
+    std::vector<std::vector<int>> Inputs;
     std::vector<int> Results;
+
     if (myfile_in.is_open())
     {
         while (getline(myfile_in, line))
@@ -31,8 +35,9 @@ int main()
             std::vector<std::string> words // we make a vector of words rather than chars
                 {
                     std::istream_iterator<std::string>(iss),
-                    td::istream_iterator<std::string>()} : Results.push_back(std::stoi(words[0]));
-            for (int ss = 1; ss < words.size(); ss++)
+                    std::istream_iterator<std::string>()};
+            Results.push_back(std::stoi(words[0]));
+            for (int ss = 1; ss < words.size()-1; ss++)
             {
                 Placeholder.push_back(std::stoi(words[ss]));
             }
@@ -64,14 +69,14 @@ int main()
         //! Training algorithm;
         // output_layer.RandomTraining(results);
         output_layer.BackPropagation(results);
-        cout << "Final output: " << outputs[weights.size()].transpose() << endl;
+        // cout << "Final output: " << outputs[weights.size()].transpose() << endl;
     }
 
     // Counter stops and prints elapsed time;
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> elapsed_time = end - start;
-    cout << "Elapsed time: " << elapsed_time.count() << " seconds.\n"
-         << endl;
+    std::cout << "Elapsed time: " << elapsed_time.count() << " seconds.\n"
+              << endl;
 
     return 0;
 }

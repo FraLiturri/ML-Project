@@ -10,7 +10,7 @@
 #include <random>
 
 #include "activation_functions.hpp"
-#include "C:/Users/franc/OneDrive/Desktop/Sync/Eigen/Eigen/Dense"
+#include "/home/calisse/Eigen/Eigen/Dense"
 
 using namespace std;
 using namespace Eigen;
