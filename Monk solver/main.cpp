@@ -2,6 +2,7 @@
 #include "activation_functions.hpp"
 #include "info.hpp"
 #include "training.hpp"
+#include "data_reader.hpp"
 #include <iostream>
 #include <string>
 #include <random>
@@ -20,32 +21,11 @@ int main()
     // Counter starts;
     auto start = chrono::high_resolution_clock::now();
 
+    std::vector<VectorXd> Inputs;
+    VectorXd Results;
     std::string fileinput = "Monk_data/monks-1.train";
-    std::string line; // declaring the std::string that will act as a placeholder for each line of the file
-    std::ifstream myfile_in(fileinput);
-    std::vector<int> Placeholder(6);
-    std::vector<std::vector<int>> Inputs;
-    std::vector<int> Results;
 
-    if (myfile_in.is_open())
-    {
-        while (getline(myfile_in, line))
-        {
-            std::istringstream iss{line};
-            std::vector<std::string> words // we make a vector of words rather than chars
-                {
-                    std::istream_iterator<std::string>(iss),
-                    std::istream_iterator<std::string>()};
-            Results.push_back(std::stoi(words[0]));
-            for (int ss = 1; ss < words.size()-1; ss++)
-            {
-                Placeholder.push_back(std::stoi(words[ss]));
-            }
-            Inputs.push_back(Placeholder);
-            Placeholder.clear();
-        }
-    }
-
+    FillData(fileinput,Results, Inputs);
     //! Data vector (inputs to Input_Layer);
     Vector<double, 3> data = {3.56, 4.89, 3}; // Creating data vector;
     Vector<double, 2> results = {-3.34, 2.23};
@@ -59,6 +39,7 @@ int main()
 
     for (int i = 0; i < 100; i++)
     {
+        
         //! Neural network construction;
         Input_Layer input_layer(data);
         Hidden_Layer first_hidden("sigmoid", 1);
