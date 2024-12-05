@@ -39,7 +39,7 @@ public:
     Hidden_Layer(string choosen_function, int depth, bool isOutputLayer = false)
     {
         func_choiser(choosen_function);
-        function_strings.push_back(choosen_function);
+        function_strings.insert(function_strings.begin()+depth +1, choosen_function);
 
         isLast = isOutputLayer;
         VectorXd inputs = next_inputs[depth - 1]; //! Has to be checked;
