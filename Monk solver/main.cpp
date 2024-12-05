@@ -18,6 +18,29 @@ int main()
     // Counter starts;
     auto start = chrono::high_resolution_clock::now();
 
+    std::string fileinput = "path.txt" std::string line; // declaring the std::string that will act as a placeholder for each line of the file
+    std::ifstream myfile_in(fileinput);
+    std::vector<int, 6> Placeholder;
+    std::vector<std::vector<int, 6>> Inputs;
+    std::vector<int> Results;
+    if (myfile_in.is_open())
+    {
+        while (getline(myfile_in, line))
+        {
+            std::istringstream iss{line};
+            std::vector<std::string> words // we make a vector of words rather than chars
+                {
+                    std::istream_iterator<std::string>(iss),
+                    td::istream_iterator<std::string>()} : Results.push_back(std::stoi(words[0]));
+            for (int ss = 1; ss < words.size(); ss++)
+            {
+                Placeholder.push_back(std::stoi(words[ss]));
+            }
+            Inputs.push_back(Placeholder);
+            Placeholder.clear();
+        }
+    }
+
     //! Data vector (inputs to Input_Layer);
     Vector<double, 3> data = {3.56, 4.89, 3}; // Creating data vector;
     Vector<double, 2> results = {-3.34, 2.23};
@@ -39,9 +62,9 @@ int main()
         Hidden_Layer output_layer("linear", 4, true);
 
         //! Training algorithm;
-        //output_layer.RandomTraining(results);
+        // output_layer.RandomTraining(results);
         output_layer.BackPropagation(results);
-        cout << "Final output: " << outputs[weights.size()].transpose() << endl; 
+        cout << "Final output: " << outputs[weights.size()].transpose() << endl;
     }
 
     // Counter stops and prints elapsed time;
