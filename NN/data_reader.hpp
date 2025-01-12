@@ -46,6 +46,7 @@ public:
             resultsVector[i] = Results[i];
         }
     }
+    
     void VecAndVec(const string fileinput, vector<VectorXd> &Inputs, vector<VectorXd> &resultsVector)
     {
         string line; // declaring the std::string that will act as a placeholder for each line of the file;
