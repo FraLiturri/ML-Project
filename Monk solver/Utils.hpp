@@ -1,8 +1,8 @@
-#include <iostream>
+/* #include <iostream>
 #include <fstream>
 #include <fcntl.h>   // Per open, flock
-#include <sys/file.h> // Per flock
-#include <unistd.h>  // Per close
+//#include <sys/file.h> // Per flock
+//#include <unistd.h>  // Per close
 #include <cstring>   // Per strerror
 #include <stdexcept> // Per std::runtime_error
 
@@ -36,3 +36,4 @@ void writeToFileSafely(const std::string &filename, const std::string &content) 
     // Chiudi il file
     close(fd);
 }
+ */

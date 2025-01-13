@@ -13,6 +13,8 @@ def StringPainter(color, string):  # Transforms a string in a colored one;
 
 guide = "..."
 
+questions_list = ""
+
 questions = [  # raws questions: pure strings;
     "How to perform a Backpropagation?",
     "How to add an hidden layer?",

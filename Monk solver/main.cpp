@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
 
     Loss TrainingLoss;
     Loss TestLoss;
-    cout<< stod(argv[1]) << " "<<stod(argv[2]) <<" "<< stod(argv[3]) << " "<<atoi(argv[4]) << endl;
+    cout << stod(argv[1]) << " " << stod(argv[2]) << " " << stod(argv[3]) << " " << atoi(argv[4]) << endl;
     //! Output computing and training algorithm;
     for (int n = 0; n < atoi(argv[4]); n++)
     {
@@ -62,7 +62,6 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
                 FinalResult == TrainingResults[k] ? training_accuracy++ : 0;
             }
             outputs.clear();
-
         };
     }
 
@@ -77,7 +76,6 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
         FinalResult == TestResults[k] ? test_accuracy++ : 0;
 
         TestLoss.calculator("MSE", "NN_results/test_loss.txt", outputs[weights.size()][0], TestResults[k], TestResults.size());
-
     }
 
     cout << "Training accuracy: " << training_accuracy / (double)TrainingData.size() * 100 << "% (" << training_accuracy << "/" << TrainingData.size() << ")" << endl;
@@ -87,14 +85,13 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     //! Counter stops and prints elapsed time;
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> elapsed_time = end - start;
-    cout << "\nElapsed time: " << elapsed_time.count() << " seconds. \n"
+    cout << "\nElapsed time: " << elapsed_time.count() << " seconds."
          << endl;
-    const std::string NameOfOutputFile = "InfoOnStuff.txt";
 
-    std::ostringstream oss;\
-    oss<< argv[1] << " "<<argv[2] << " "<<argv[3] << " " <<training_accuracy / (double)TrainingData.size() << " " << test_accuracy / (double)TestData.size()<< " "<<TestLoss.loss_value <<"\n";
-    const std::string Information  = oss.str();
-    writeToFileSafely(NameOfOutputFile, Information);
+    const std::string NameOfOutputFile = "Grid_parameters_loss.txt";
+    std::ostringstream oss;
+    const std::string Information = oss.str();
+    // writeToFileSafely(NameOfOutputFile, Information);
 
     return 0;
 }

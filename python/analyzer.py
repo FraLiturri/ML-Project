@@ -23,7 +23,7 @@ def run_exe(file_path, n):
             break
 
 
-if str(sys.argv[1]) == "plot":
+def plot():
     training_loss_path = "NN_results/training_loss.txt"
     tr_loss = np.loadtxt(training_loss_path)
     x_tr = np.linspace(1, len(tr_loss), len(tr_loss))
@@ -36,27 +36,8 @@ if str(sys.argv[1]) == "plot":
     plt.legend(loc="best")
     plt.show()
 
-elif str(sys.argv[1]) == "loss_mean":
-    filepath = "NN_results/loss_collection.txt"
-    loss = np.loadtxt(filepath)
-    mean_loss = loss.mean()
-    std_loss = loss.std()
-    print(
-        f"\nMean loss is: {tronca_decimal(mean_loss, 3)} +/- {tronca_decimal(std_loss,3)}.\n"
-    )
 
-elif str(sys.argv[1]) == "iterate":
+def iterate():
     exe_path = sys.argv[2]
     number_of_runs = int(sys.argv[3])
     run_exe(exe_path, number_of_runs)
-
-elif str(sys.argv[1]) == "clear":
-    filepath = "NN_results/loss_collection.txt"
-    lines = np.loadtxt(
-        filepath,
-    )
-    cleaned_lines = [line.strip() for line in lines if line.strip()]
-    np.savetxt(filepath)
-
-else:
-    print("\nError...\n")
