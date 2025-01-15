@@ -24,7 +24,7 @@ Lambda_Min_Default = 0
 Lambda_Max_Default = 0
 Alpha_Min_Default = 0
 Alpha_Max_Default = 0
-Step1_Default = 100
+Step1_Default = 10
 Step2_Default = 1
 Step3_Default = 1
 Training_Steps_Default = 200
@@ -38,6 +38,7 @@ Alpha_single = 0.0
 
 
 def CallMain(Inputs):
+    print("Sono qui!")
     command = [
         "./main.exe",
         str(Inputs[0]),
@@ -47,7 +48,7 @@ def CallMain(Inputs):
     ]
     result = subprocess.run(command, capture_output=True, text=True)
     print(result.stdout)
-    
+
 
 def Compile():
     global IsCompilationGood
@@ -114,12 +115,14 @@ def submit_values():
                     Step2_Default,
                     Step3_Default,
                 )
-
+                print("Sono qui!")
                 Inputs = [
                     [x.Eta, x.Lambda, x.Alpha, Training_Steps_Default]
                     for x in MyGrid.Grid
                 ]
+                print("Sono qui!")
                 with mp.Pool(processes=CPU_Number) as pool:
+                    print("Sono qui!")
                     results = pool.map(CallMain, Inputs)
             else:
                 eta_min = float(eta_min_entry.get())
@@ -264,22 +267,38 @@ eta_max_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Eta max [{Eta_Max_Defa
 eta_min_entry.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 eta_max_entry.grid(row=0, column=3, padx=10, pady=5, sticky="w")
 
-lambda_min_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Lambda min [{Lambda_Min_Default}]")
-lambda_max_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Lambda max [{Lambda_Max_Default}]")
+lambda_min_entry = ctk.CTkEntry(
+    grid_tab, placeholder_text=f"Lambda min [{Lambda_Min_Default}]"
+)
+lambda_max_entry = ctk.CTkEntry(
+    grid_tab, placeholder_text=f"Lambda max [{Lambda_Max_Default}]"
+)
 
 lambda_min_entry.grid(row=1, column=0, padx=10, pady=5, sticky="w")
 lambda_max_entry.grid(row=1, column=3, padx=10, pady=5, sticky="w")
 
-alpha_min_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Alpha min [{Alpha_Min_Default}]")
-alpha_max_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Alpha max [{Alpha_Max_Default}]")
+alpha_min_entry = ctk.CTkEntry(
+    grid_tab, placeholder_text=f"Alpha min [{Alpha_Min_Default}]"
+)
+alpha_max_entry = ctk.CTkEntry(
+    grid_tab, placeholder_text=f"Alpha max [{Alpha_Max_Default}]"
+)
 
 alpha_min_entry.grid(row=2, column=0, padx=10, pady=5, sticky="w")
 alpha_max_entry.grid(row=2, column=3, padx=10, pady=5, sticky="w")
 
-steps_eta_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Eta steps [{Step1_Default}]")
-steps_lambda_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Lambda steps [{Step2_Default}]")
-steps_alpha_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Alpha steps [{Step3_Default}]")
-training_steps_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Epochs [{Training_Steps_Default}]")
+steps_eta_entry = ctk.CTkEntry(
+    grid_tab, placeholder_text=f"Eta steps [{Step1_Default}]"
+)
+steps_lambda_entry = ctk.CTkEntry(
+    grid_tab, placeholder_text=f"Lambda steps [{Step2_Default}]"
+)
+steps_alpha_entry = ctk.CTkEntry(
+    grid_tab, placeholder_text=f"Alpha steps [{Step3_Default}]"
+)
+training_steps_entry = ctk.CTkEntry(
+    grid_tab, placeholder_text=f"Epochs [{Training_Steps_Default}]"
+)
 
 steps_eta_entry.grid(row=3, column=0, padx=10, pady=5, sticky="w")
 steps_lambda_entry.grid(row=3, column=3, padx=10, pady=5, sticky="w")
@@ -294,8 +313,12 @@ recompile_button.grid(row=5, column=2, columnspan=2, pady=20)
 
 # Single Run Tab
 single_eta_entry = ctk.CTkEntry(single_run_tab, placeholder_text=f"Eta [{Eta_single}]")
-single_lambda_entry = ctk.CTkEntry(single_run_tab, placeholder_text=f"Lambda [{Lambda_single}]")
-single_alpha_entry = ctk.CTkEntry(single_run_tab, placeholder_text=f"Alpha [{Alpha_single}]")
+single_lambda_entry = ctk.CTkEntry(
+    single_run_tab, placeholder_text=f"Lambda [{Lambda_single}]"
+)
+single_alpha_entry = ctk.CTkEntry(
+    single_run_tab, placeholder_text=f"Alpha [{Alpha_single}]"
+)
 single_training_steps_entry = ctk.CTkEntry(
     single_run_tab, placeholder_text=f"Epochs [{Training_Steps_Default}]"
 )
@@ -305,13 +328,15 @@ single_lambda_entry.grid(row=0, column=3, padx=10, pady=5, sticky="w")
 single_alpha_entry.grid(row=1, column=0, padx=10, pady=5, sticky="w")
 single_training_steps_entry.grid(row=1, column=3, padx=10, pady=5, sticky="w")
 
-done_button = ctk.CTkButton(
+done_button_single = ctk.CTkButton(
     single_run_tab, text="Done", command=submit_values_for_single_training
 )
-done_button.grid(row=5, column=0, columnspan=2, pady=20)
+done_button_single.grid(row=5, column=0, columnspan=2, pady=20)
 
-recompile_button = ctk.CTkButton(single_run_tab, text="Ricompile", command=Compile)
-recompile_button.grid(row=5, column=2, columnspan=2, pady=20)
+recompile_button_single = ctk.CTkButton(
+    single_run_tab, text="Ricompile", command=Compile
+)
+recompile_button_single.grid(row=5, column=2, columnspan=2, pady=20)
 
 root.mainloop()
 

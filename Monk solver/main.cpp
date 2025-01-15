@@ -90,8 +90,11 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
 
     const std::string NameOfOutputFile = "Grid_parameters_loss.txt";
     std::ostringstream oss;
+    oss<< argv[1] << " "<<argv[2] << " "<<argv[3] << " " <<training_accuracy / (double)TrainingData.size() << " " << test_accuracy / (double)TestData.size()<< " "<<TestLoss.loss_value;
+
     const std::string Information = oss.str();
-    // writeToFileSafely(NameOfOutputFile, Information);
+    cout<< "Al momento sto scrivendo... "<<Information << endl;
+    writeToFileSafely(NameOfOutputFile, Information);
 
     return 0;
 }
