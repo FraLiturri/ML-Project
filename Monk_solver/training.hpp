@@ -11,7 +11,7 @@
 #include <cmath>
 #include <stdexcept>
 
-#include "EigenPath.hpp"
+#include "eigen_path.hpp"
 
 using namespace std;
 using namespace Eigen;

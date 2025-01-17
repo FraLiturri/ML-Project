@@ -4,7 +4,7 @@
 #include "lib.hpp"
 #include "activation_functions.hpp"
 
-#include "EigenPath.hpp"
+#include "eigen_path.hpp"
 
 using namespace std;
 using namespace Eigen;

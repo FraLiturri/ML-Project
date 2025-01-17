@@ -1,3 +1,5 @@
+
+
 def StringPainter(color, string):  # Transforms a string in a colored one;
     if color == "blue":
         special_opener = "\033[94m"

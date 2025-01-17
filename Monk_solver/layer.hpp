@@ -4,7 +4,8 @@
 #include "lib.hpp"
 #include "activation_functions.hpp"
 #include "demiurge.hpp"
-#include "EigenPath.hpp"
+
+#include "eigen_path.hpp"
 
 #include <variant>
 

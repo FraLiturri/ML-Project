@@ -5,8 +5,8 @@
 #include "training.hpp"
 #include "data_reader.hpp"
 #include "loss.hpp"
-#include "Utils.hpp"
-#include "EigenPath.hpp"
+#include "safe_writer.hpp"
+#include "eigen_path.hpp"
 
 using namespace Eigen;
 using namespace std;
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
 
     Loss TrainingLoss;
     Loss TestLoss;
-    cout << stod(argv[1]) << " " << stod(argv[2]) << " " << stod(argv[3]) << " " << atoi(argv[4]) << endl;
+
     //! Output computing and training algorithm;
     for (int n = 0; n < atoi(argv[4]); n++)
     {
@@ -78,6 +78,8 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
         TestLoss.calculator("MSE", "NN_results/test_loss.txt", outputs[weights.size()][0], TestResults[k], TestResults.size());
     }
 
+    cout << "Eta: " << stod(argv[1])<< "\nAlpha: " << stod(argv[2]) << "\nLambda: " << stod(argv[2]) << endl << endl;  
+
     cout << "Training accuracy: " << training_accuracy / (double)TrainingData.size() * 100 << "% (" << training_accuracy << "/" << TrainingData.size() << ")" << endl;
     cout << "Test accuracy: " << test_accuracy / (double)TestData.size() * 100 << "% (" << test_accuracy << "/" << TestData.size() << ")" << endl;
     cout << "Test loss is: " << TestLoss.last_loss << endl;
@@ -88,12 +90,12 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     cout << "\nElapsed time: " << elapsed_time.count() << " seconds."
          << endl;
 
-    const std::string NameOfOutputFile = "Grid_parameters_loss.txt";
+    //! Writing data safely during parallel grid search;
+    const std::string NameOfOutputFile = "grid_results.txt";
     std::ostringstream oss;
-    oss<< argv[1] << " "<<argv[2] << " "<<argv[3] << " " <<training_accuracy / (double)TrainingData.size() << " " << test_accuracy / (double)TestData.size()<< " "<<TestLoss.loss_value;
+    oss << argv[1] << " " << argv[2] << " " << argv[3] << " " << training_accuracy / (double)TrainingData.size() << " " << test_accuracy / (double)TestData.size() << " " << TestLoss.loss_value;
 
     const std::string Information = oss.str();
-    cout<< "Al momento sto scrivendo... "<<Information << endl;
     writeToFileSafely(NameOfOutputFile, Information);
 
     return 0;

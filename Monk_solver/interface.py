@@ -1,7 +1,7 @@
 # %%
 import numpy as np
 import multiprocessing as mp
-from Utils import HyperParameters, Grid
+import Monk_solver.parameters as param
 import sys
 import subprocess
 from itertools import product
@@ -14,8 +14,8 @@ from customtkinter import *
 import customtkinter as ctk
 
 IsCompilationGood = False
-
 NomeFileDaCompilare = "main.cpp"
+run_command = "main.exe"
 
 # Standard parameters for grid search;
 Eta_Min_Default = 0.01
@@ -38,9 +38,8 @@ Alpha_single = 0.0
 
 
 def CallMain(Inputs):
-    print("Sono qui!")
     command = [
-        "./main.exe",
+        run_command,
         str(Inputs[0]),
         str(Inputs[1]),
         str(Inputs[2]),
@@ -54,7 +53,7 @@ def Compile():
     global IsCompilationGood
     try:
         process = subprocess.run(
-            ["g++", "-o", "main.exe", NomeFileDaCompilare],
+            ["cd Monksolver; g++", "-o", "main.exe; cd..", NomeFileDaCompilare],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -79,19 +78,20 @@ def Compile():
 
 
 def BuildGrid(eta_1, eta_2, lambda_1, lambda_2, alpha_1, alpha_2, step1, step2, step3):
-    MyGrid = Grid(
+    MyGrid = param.Grid(
         eta_1, eta_2, lambda_1, lambda_2, alpha_1, alpha_2, step1, step2, step3
     )
     return MyGrid
 
+
 if __name__ == "__main__":
 
     def submit_values():
-        
+
         global IsCompilationGood
         if IsCompilationGood:
             subprocess.run(
-                ["rm", "Grid_parameters_loss.txt"], capture_output=True, text=True
+                ["rm", "grid_results.txt"], capture_output=True, text=True
             )
             try:
                 if (
@@ -117,14 +117,11 @@ if __name__ == "__main__":
                         Step2_Default,
                         Step3_Default,
                     )
-                    print("Sono qui!")
                     Inputs = [
                         [x.Eta, x.Lambda, x.Alpha, Training_Steps_Default]
                         for x in MyGrid.Grid
                     ]
-                    print("Sono qui!")
                     with mp.Pool(processes=CPU_Number) as pool:
-                        print("Sono qui!")
                         results = pool.map(CallMain, Inputs)
                 else:
                     eta_min = float(eta_min_entry.get())
@@ -133,10 +130,10 @@ if __name__ == "__main__":
                     lambda_max = float(lambda_max_entry.get())
                     alpha_min = float(alpha_min_entry.get())
                     alpha_max = float(alpha_max_entry.get())
-                    step1 = float(steps_eta_entry.get())
-                    step2 = float(steps_lambda_entry.get())
-                    step3 = float(steps_alpha_entry.get())
-                    training_steps = float(training_steps_entry.get())
+                    step1 = int(steps_eta_entry.get())
+                    step2 = int(steps_lambda_entry.get())
+                    step3 = int(steps_alpha_entry.get())
+                    training_steps = int(training_steps_entry.get())
 
                     if (
                         (eta_min > eta_max)
@@ -144,11 +141,11 @@ if __name__ == "__main__":
                         | (alpha_min > alpha_max)
                     ):
                         raise ValueError
-                    if (step1 < 0) | (step2 < 0) | (step3 < 0):
+                    if (step1 <= 0) | (step2 <= 0) | (step3 <= 0):
                         raise ValueError
                     if training_steps < 0:
                         raise ValueError
-                    MyGrid = Grid(
+                    MyGrid = param.Grid(
                         eta_min,
                         eta_max,
                         lambda_min,
@@ -170,12 +167,11 @@ if __name__ == "__main__":
         else:
             messagebox.showinfo("Compilation filed.")
 
-
     def submit_values_for_single_training():
         global IsCompilationGood
         if IsCompilationGood:
             subprocess.run(
-                ["rm", "Grid_parameters_loss.txt"], capture_output=True, text=True
+                ["rm", "grid_results.txt"], capture_output=True, text=True
             )
             try:
                 if (
@@ -190,7 +186,11 @@ if __name__ == "__main__":
                         Alpha_single,
                         Training_Steps_Default,
                     ]
+                    print(
+                        "---% Single run %---",
+                    )
                     CallMain(Inputs)
+
                 else:
                     etaH = float(single_eta_entry.get())
                     lambdaH = float(single_lambda_entry.get())
@@ -209,10 +209,9 @@ if __name__ == "__main__":
             messagebox.showinfo("Compilation failed.")
         return 1
 
-
     try:
         process = subprocess.run(
-            ["g++", "-o", "main.exe", NomeFileDaCompilare],
+            ["cd Monk_solver; g++", "-o", "main.exe; cd..", NomeFileDaCompilare],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -236,20 +235,20 @@ if __name__ == "__main__":
     ctk.set_appearance_mode("Dark")
     ctk.set_default_color_theme("blue")
 
-
     # Function for the "Done" button
     def done_action():
         print("Done button clicked")
 
-
     # Function for the "Ricompile" button
     def recompile_action():
         try:
-            subprocess.run(["g++", "-o", "main.exe", "main.cpp"], check=True)
+            subprocess.run(
+                ["cd Monk_solver; g++", "-o", "main.exe; cd..", "Monk_solver/main.cpp"],
+                check=True,
+            )
             print("Compilation successful.")
         except subprocess.CalledProcessError as e:
             print("Compilation failed:", e)
-
 
     # Create the main application window
     root = ctk.CTk()
@@ -262,8 +261,12 @@ if __name__ == "__main__":
     grid_tab = tab_view.add("Grid Search")
     single_run_tab = tab_view.add("Single Run")
 
-    eta_min_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Eta min [{Eta_Min_Default}]")
-    eta_max_entry = ctk.CTkEntry(grid_tab, placeholder_text=f"Eta max [{Eta_Max_Default}]")
+    eta_min_entry = ctk.CTkEntry(
+        grid_tab, placeholder_text=f"Eta min [{Eta_Min_Default}]"
+    )
+    eta_max_entry = ctk.CTkEntry(
+        grid_tab, placeholder_text=f"Eta max [{Eta_Max_Default}]"
+    )
 
     eta_min_entry.grid(row=0, column=0, padx=10, pady=5, sticky="w")
     eta_max_entry.grid(row=0, column=3, padx=10, pady=5, sticky="w")
@@ -313,7 +316,9 @@ if __name__ == "__main__":
     recompile_button.grid(row=5, column=2, columnspan=2, pady=20)
 
     # Single Run Tab
-    single_eta_entry = ctk.CTkEntry(single_run_tab, placeholder_text=f"Eta [{Eta_single}]")
+    single_eta_entry = ctk.CTkEntry(
+        single_run_tab, placeholder_text=f"Eta [{Eta_single}]"
+    )
     single_lambda_entry = ctk.CTkEntry(
         single_run_tab, placeholder_text=f"Lambda [{Lambda_single}]"
     )

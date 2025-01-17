@@ -17,7 +17,7 @@ def main():
     elif str(sys.argv[1]) == "initialize": #C:/Users/franc/OneDrive/Desktop/Sync/Eigen/Eigen/Dense"
         Eigen_path = str(input("Insert Eigen path here: "))
         initializer.create_hpp_file(
-            "Monk solver/EigenPath.hpp", Eigen_path
+            Eigen_path
         )
 
     elif str(sys.argv[1]) == "grid search":    

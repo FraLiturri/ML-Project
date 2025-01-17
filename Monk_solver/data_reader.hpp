@@ -3,7 +3,7 @@
 
 #include "lib.hpp"
 #include "demiurge.hpp"
-#include "EigenPath.hpp"
+#include "eigen_path.hpp"
 
 #include <variant>
 
