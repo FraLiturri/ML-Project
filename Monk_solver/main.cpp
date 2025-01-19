@@ -9,15 +9,14 @@
 #include "validation.hpp"
 #include "eigen_path.hpp"
 
+
 using namespace Eigen;
 using namespace std;
 
 vector<VectorXd> TrainingData, TestData, ValidationData, InternalTestData;
 VectorXd TrainingResults, TestResults, ValidationResults, InternalTestResults;
-int TN = 0;
-int TP = 0;
-int FN = 0;
-int FP = 0;
+
+int TN = 0, TP = 0, FN = 0, FP = 0;
 int training_accuracy = 0, test_accuracy = 0, validation_accuracy = 0;
 double FinalResult; // auxiliary double;
 
@@ -98,28 +97,16 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
 
         outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
         FinalResult == TestResults[k] ? test_accuracy++ : 0;
+        
         if (FinalResult == TestResults[k])
         {
-            if (FinalResult == 1)
-            {
-                TP++;
-            }
-            else
-            {
-                TN++;
-            }
+            FinalResult == 1 ? TP++ : TN++;
         }
         else
         {
-            if (FinalResult == 1)
-            {
-                FP++;
-            }
-            else
-            {
-                FN++;
-            }
+            FinalResult == 1 ? FP++ : FN++;
         }
+
         TestLoss.calculator("MSE", "NN_results/test_loss.txt", outputs[weights.size()][0], TestResults[k], TestResults.size());
     }
     cout << "Eta: " << stod(argv[1]) << "\nAlpha: " << stod(argv[2]) << "\nLambda: " << stod(argv[2]) << endl
@@ -138,7 +125,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     //! Writing data safely during parallel grid search;
     const std::string NameOfOutputFile = "grid_results.txt";
     std::ostringstream oss;
-    oss << argv[1] << " " << argv[2] << " " << argv[3] << " " << training_accuracy / (double)TrainingData.size() << " " << test_accuracy / (double)TestData.size() << " " << TestLoss.loss_value << " " << TP << " " << FP << " " << TN << " " << FN << " ";
+    oss << "Eta: " <<argv[1] << " Alpha: " << argv[2] << " Lambda: " << argv[3] << " Training Accuracy: " << training_accuracy / (double)TrainingData.size() << " Validation accuracy: " << validation_accuracy / (double)ValidationData.size() << " Val Loss: " << ValidationLoss.loss_value << " TP: " << TP << " FP: " << FP << " TN: " << TN << " FN: " << FN << " ";
 
     const std::string Information = oss.str();
     writeToFileSafely(NameOfOutputFile, Information);
