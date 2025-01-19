@@ -6,14 +6,18 @@
 #include "data_reader.hpp"
 #include "loss.hpp"
 #include "safe_writer.hpp"
+#include "validation.hpp"
 #include "eigen_path.hpp"
 
 using namespace Eigen;
 using namespace std;
 
-vector<VectorXd> TrainingData, TestData, ValidationData;
-VectorXd TrainingResults, TestResults, ValidationResults;
-
+vector<VectorXd> TrainingData, TestData, ValidationData, InternalTestData;
+VectorXd TrainingResults, TestResults, ValidationResults, InternalTestResults;
+int TN = 0;
+int TP = 0;
+int FN = 0;
+int FP = 0;
 int training_accuracy = 0, test_accuracy = 0, validation_accuracy = 0;
 double FinalResult; // auxiliary double;
 
@@ -23,6 +27,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     auto start = chrono::high_resolution_clock::now();
 
     ofstream("NN_results/training_loss.txt", std::ios::trunc).close();
+    ofstream("NN_results/val_loss.txt", std::ios::trunc).close();
     ofstream("NN_results/test_loss.txt", std::ios::trunc).close();
 
     //! Demiurge blows;
@@ -32,6 +37,12 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     //! Preparing data for training (and validation) and test phase;
     DataGetter("Monk_data/monks-2binary.train", TrainingData, TrainingResults);
     DataGetter("Monk_data/monks-2binary.test", TestData, TestResults);
+    cout << TrainingData.size() << " " << ValidationData.size() << endl;
+
+    //! Splitting data for validation part;
+    Validation Validator;
+    Validator.HoldOut(TrainingData, TrainingResults, ValidationData, ValidationResults, InternalTestData, InternalTestResults, TrainingData.size() - 10, TrainingData.size());
+    cout << TrainingData.size() << " " << ValidationData.size() << endl;
 
     //! Printing NN general info: can be avoided if not desired;
     print_info(pointerNN);
@@ -41,8 +52,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     Hidden_Layer first_hidden;
     Hidden_Layer output_layer;
 
-    Loss TrainingLoss;
-    Loss TestLoss;
+    Loss TrainingLoss, TestLoss, ValidationLoss;
 
     //! Output computing and training algorithm;
     for (int n = 0; n < atoi(argv[4]); n++)
@@ -55,7 +65,6 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
 
             output_layer.BackPropagation(TrainingResults[k], stod(argv[1]), stod(argv[2]), stod(argv[3]));
             TrainingLoss.calculator("MSE", "NN_results/training_loss.txt", outputs[weights.size()][0], TrainingResults[k], TrainingResults.size());
-
             if (n == atoi(argv[4]) - 1) // Accuracy calculator;
             {
                 outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
@@ -63,6 +72,21 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
             }
             outputs.clear();
         };
+        //! Validation;
+        for (int k = 0; k < ValidationData.size(); k++)
+        {
+            input_layer.forward_pass(ValidationData[k]);
+            first_hidden.forward_pass("sigmoid", 1);
+            output_layer.forward_pass("sigmoid", 2, true);
+
+            ValidationLoss.calculator("MSE", "NN_results/val_loss.txt", outputs[weights.size()][0], ValidationResults[k], ValidationResults.size());
+            if (n == atoi(argv[4]) - 1) // Accuracy calculator;
+            {
+                outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
+                FinalResult == ValidationResults[k] ? validation_accuracy++ : 0;
+            }
+            outputs.clear();
+        }
     }
 
     //! Test;
@@ -74,16 +98,37 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
 
         outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
         FinalResult == TestResults[k] ? test_accuracy++ : 0;
-
+        if (FinalResult == TestResults[k])
+        {
+            if (FinalResult == 1)
+            {
+                TP++;
+            }
+            else
+            {
+                TN++;
+            }
+        }
+        else
+        {
+            if (FinalResult == 1)
+            {
+                FP++;
+            }
+            else
+            {
+                FN++;
+            }
+        }
         TestLoss.calculator("MSE", "NN_results/test_loss.txt", outputs[weights.size()][0], TestResults[k], TestResults.size());
     }
+    cout << "Eta: " << stod(argv[1]) << "\nAlpha: " << stod(argv[2]) << "\nLambda: " << stod(argv[2]) << endl
+         << endl;
 
-    cout << "Eta: " << stod(argv[1])<< "\nAlpha: " << stod(argv[2]) << "\nLambda: " << stod(argv[2]) << endl << endl;  
-
-    cout << "Training accuracy: " << training_accuracy / (double)TrainingData.size() * 100 << "% (" << training_accuracy << "/" << TrainingData.size() << ")" << endl;
+    cout << "Validation accuracy: " << validation_accuracy / (double)ValidationData.size() * 100 << "% (" << validation_accuracy << "/" << (double)ValidationData.size() << ")" << endl;
     cout << "Test accuracy: " << test_accuracy / (double)TestData.size() * 100 << "% (" << test_accuracy << "/" << TestData.size() << ")" << endl;
     cout << "Test loss is: " << TestLoss.last_loss << endl;
-
+    cout << "Val loss is: " << ValidationLoss.last_loss << endl;
     //! Counter stops and prints elapsed time;
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> elapsed_time = end - start;
@@ -93,7 +138,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     //! Writing data safely during parallel grid search;
     const std::string NameOfOutputFile = "grid_results.txt";
     std::ostringstream oss;
-    oss << argv[1] << " " << argv[2] << " " << argv[3] << " " << training_accuracy / (double)TrainingData.size() << " " << test_accuracy / (double)TestData.size() << " " << TestLoss.loss_value;
+    oss << argv[1] << " " << argv[2] << " " << argv[3] << " " << training_accuracy / (double)TrainingData.size() << " " << test_accuracy / (double)TestData.size() << " " << TestLoss.loss_value << " " << TP << " " << FP << " " << TN << " " << FN << " ";
 
     const std::string Information = oss.str();
     writeToFileSafely(NameOfOutputFile, Information);

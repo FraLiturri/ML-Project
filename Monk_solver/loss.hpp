@@ -28,8 +28,25 @@ class Loss
 public:
     double loss_value;
     double last_loss; 
-    void calculator(string loss_function, string filepath, double NN_outputs, double targets, double data_size)
+    void calculator(string loss_function, string filepath, double NN_outputs, double targets, int data_size)
     {
+
+        counter == 0 ? loss_value = 0 : 1;
+        if (loss_function == "MSE")
+        {
+            choice = MSE;
+            loss_value += choice(NN_outputs, targets) / (double)data_size;
+        }
+        else if (loss_function == "BCE")
+        {
+            choice = BCE;
+            loss_value += choice(NN_outputs, targets) / (double)data_size;
+        }
+        else
+        {
+            cout << "\nUnvailable choice as loss function. " << endl;
+        }
+        counter++;
         if (counter == data_size)
         {
             ofstream outFile(filepath, std::ios::app);
@@ -40,28 +57,11 @@ public:
             }
             else
             {
-                std::cerr << "Impossible to open file. " << filepath << std::endl;
+                cerr << "Impossible to open file." << filepath << endl;
             }
-            last_loss = loss_value; 
-            loss_value = 0;
             counter = 0;
+            last_loss = loss_value;
         }
-
-        if (loss_function == "MSE")
-        {
-            choice = MSE;
-            loss_value += choice(NN_outputs, targets) / data_size;
-        }
-        else if (loss_function == "BCE")
-        {
-            choice = BCE;
-            loss_value += choice(NN_outputs, targets) / data_size;
-        }
-        else
-        {
-            cout << "\nUnvailable choice as loss function. " << endl;
-        }
-        counter++;
     };
 };
 

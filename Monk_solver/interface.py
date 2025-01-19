@@ -1,7 +1,7 @@
 # %%
 import numpy as np
 import multiprocessing as mp
-import Monk_solver.parameters as param
+import parameters as param
 import sys
 import subprocess
 from itertools import product
@@ -15,7 +15,7 @@ import customtkinter as ctk
 
 IsCompilationGood = False
 NomeFileDaCompilare = "main.cpp"
-run_command = "main.exe"
+run_command = "./main.exe"
 
 # Standard parameters for grid search;
 Eta_Min_Default = 0.01
@@ -53,7 +53,7 @@ def Compile():
     global IsCompilationGood
     try:
         process = subprocess.run(
-            ["cd Monksolver; g++", "-o", "main.exe; cd..", NomeFileDaCompilare],
+            ["g++", "-o", "main.exe", NomeFileDaCompilare],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -211,7 +211,7 @@ if __name__ == "__main__":
 
     try:
         process = subprocess.run(
-            ["cd Monk_solver; g++", "-o", "main.exe; cd..", NomeFileDaCompilare],
+            ["g++", "-o", "main.exe", NomeFileDaCompilare],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,

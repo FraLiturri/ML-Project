@@ -8,7 +8,7 @@
 #include "validation.hpp"
 #include "estimator.hpp"
 
-#include "C:/Users/franc/OneDrive/Desktop/Sync/Eigen/Eigen/Dense"
+#include "eigen_path.hpp"
 
 using namespace Eigen;
 using namespace std;
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
         second_hidden.forward_pass("leaky_relu", 2);
         output_layer.forward_pass("linear", 3, true);
 
-        ValidationLoss.calculator("MEE", "NN_results/test_loss.txt", outputs[weights.size()], TestResults[k], TestResults.size());
+        TestLoss.calculator("MEE", "NN_results/test_loss.txt", outputs[weights.size()], TestResults[k], TestResults.size());
         outputs.clear();
     }
 

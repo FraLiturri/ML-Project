@@ -10,8 +10,8 @@ def main():
     if len(sys.argv) == 1:
         print(
             "\nHi welcome! I'll be your guide during this journey. Here there's a list of commands: \n \n"
-            f" 1. {info.StringPainter("blue", "help")}: to show a list of questions about code implementation. \n"
-            f" 2. {info.StringPainter("blue", "iterate file_path N")}: to iterate the execution of a .exe file N times. \n"
+            f' 1. {info.StringPainter("blue", "help")}: to show a list of questions about code implementation. \n'
+            f' 2. {info.StringPainter("blue", "iterate file_path N")}: to iterate the execution of a .exe file N times. \n'
         )
 
     elif str(sys.argv[1]) == "initialize": #C:/Users/franc/OneDrive/Desktop/Sync/Eigen/Eigen/Dense"
