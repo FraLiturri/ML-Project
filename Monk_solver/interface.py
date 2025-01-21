@@ -12,22 +12,22 @@ import multiprocessing as mp
 import os
 from customtkinter import *
 import customtkinter as ctk
-
+from matplotlib import pyplot as plt
 IsCompilationGood = False
 NomeFileDaCompilare = "main.cpp"
 run_command = "./main.exe"
 
 # Standard parameters for grid search;
-Eta_Min_Default = 0.01
-Eta_Max_Default = 0.5
+Eta_Min_Default = 1e-2
+Eta_Max_Default = 10
 Lambda_Min_Default = 0
 Lambda_Max_Default = 0
 Alpha_Min_Default = 0
 Alpha_Max_Default = 0
-Step1_Default = 10
+Step1_Default = 32
 Step2_Default = 1
 Step3_Default = 1
-Training_Steps_Default = 200
+Training_Steps_Default = 500
 CPU_Number = os.cpu_count()
 
 
@@ -121,8 +121,30 @@ if __name__ == "__main__":
                         [x.Eta, x.Lambda, x.Alpha, Training_Steps_Default]
                         for x in MyGrid.Grid
                     ]
-                    with mp.Pool(processes=CPU_Number) as pool:
-                        results = pool.map(CallMain, Inputs)
+                    for i in range(10):
+                        with mp.Pool(processes=CPU_Number) as pool:
+                           results = pool.map(CallMain, Inputs)
+                    
+                    val_loss =np.loadtxt("grid_results.txt", usecols  = 14 )
+                    eta =np.loadtxt("grid_results.txt", usecols  = 1 )
+                    alpha =np.loadtxt("grid_results.txt", usecols  = 3 )
+                    Lambd = np.loadtxt("grid_results.txt", usecols  = 5 )
+                    indexes = np.argsort(eta)
+                    eta = eta[indexes]
+                    val_loss = val_loss[indexes]
+
+                    eta  = np.linspace(Eta_Min_Default, Eta_Max_Default, Step1_Default)
+                    val_loss  = val_loss.reshape(-1, 10)
+                    val_mean = np.mean(val_loss, axis =1)
+                    val_std = np.std(val_loss, axis = 1)
+
+                    Index = np.argmin(val_mean)
+                    Message  = f"L'indice della loss piu' bassa e' {Index +1} e corrisponde ad una loss di {val_mean[Index]}.\n La tripletta associata e' (Eta, Alpha, Lambda) = ({eta[Index]})"
+                    print(Message)
+                    plt.errorbar(eta, val_mean, val_std, fmt = '.')
+                    plt.grid(ls = 'dashed')
+                    plt.show()
+
                 else:
                     eta_min = float(eta_min_entry.get())
                     eta_max = float(eta_max_entry.get())
@@ -159,8 +181,18 @@ if __name__ == "__main__":
                     Inputs = [
                         [x.Eta, x.Lambda, x.Alpha, training_steps] for x in MyGrid.Grid
                     ]
-                    with mp.Pool(processes=CPU_Number) as pool:
-                        results = pool.map(CallMain, Inputs)
+                    for i in range(20):
+                        with mp.Pool(processes=CPU_Number) as pool:
+                            results = pool.map(CallMain, Inputs)
+                    val_loss =np.loadtxt("grid_results.txt", usecols  = 9 )
+                    eta =np.loadtxt("grid_results.txt", usecols  = 1 )
+                    alpha =np.loadtxt("grid_results.txt", usecols  = 3 )
+                    Lambd = np.loadtxt("grid_results.txt", usecols  = 5 )
+                    Index = np.argmin(val_loss)
+                    Message  = f"L'indice della loss piu' bassa e' {Index} e corrisponde ad una loss di {val_loss[Index]}.\n La tripletta associata e' (Eta, Alpha, Lambda) = ({eta[Index]},{alpha[Index]},{Lambd[Index]})"
+                    print(Message)
+                    plt.plot(eta, val_loss, ".")
+                    plt.show()
 
             except ValueError:
                 messagebox.showerror("Error", "Please insert valid values.")

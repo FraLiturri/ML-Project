@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     ofstream("NN_results/test_loss.txt", std::ios::trunc).close();
 
     //! Demiurge blows;
-    Demiurge NeuralNetwork(17, {10}, 1);  // Input units - hidden_units vector - output units;
+    Demiurge NeuralNetwork(17, {4}, 1);  // Input units - hidden_units vector - output units;
     Demiurge *pointerNN = &NeuralNetwork; // Pointer to NeuralNetwork for print_info, avoidable if not desired;
 
     //! Preparing data for training (and validation) and test phase;
@@ -41,8 +41,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     //! Splitting data for validation part;
     Validation Validator;
     Validator.HoldOut(TrainingData, TrainingResults, ValidationData, ValidationResults, InternalTestData, InternalTestResults, TrainingData.size() - 10, TrainingData.size());
-    cout << TrainingData.size() << " " << ValidationData.size() << endl;
-
+    
     //! Printing NN general info: can be avoided if not desired;
     print_info(pointerNN);
 
@@ -52,6 +51,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     Hidden_Layer output_layer;
 
     Loss TrainingLoss, TestLoss, ValidationLoss;
+
 
     //! Output computing and training algorithm;
     for (int n = 0; n < atoi(argv[4]); n++)
