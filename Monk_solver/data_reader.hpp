@@ -22,7 +22,7 @@ void DataGetter(const string fileinput, vector<VectorXd> &Inputs, VectorXd &resu
         while (getline(myfile_in, line))
         {
             istringstream iss{line};
-            vector<string> words // we make a vector of words rather than chars;
+            vector<string> words
                 {
                     istream_iterator<string>(iss),
                     istream_iterator<string>()};

@@ -78,10 +78,11 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
         TestLoss.calculator("MSE", "NN_results/test_loss.txt", outputs[weights.size()][0], TestResults[k], TestResults.size());
     }
 
-    cout << "Eta: " << stod(argv[1])<< "\nAlpha: " << stod(argv[2]) << "\nLambda: " << stod(argv[2]) << endl << endl;  
+    cout << "Eta: " << stod(argv[1]) << "\nAlpha: " << stod(argv[2]) << "\nLambda: " << stod(argv[2]) << endl
+         << endl;
 
     cout << "Training accuracy: " << training_accuracy / (double)TrainingData.size() * 100 << "% (" << training_accuracy << "/" << TrainingData.size() << ")" << endl;
-    cout << "Test accuracy: " << test_accuracy / (double)TestData.size() * 100 << "% (" << test_accuracy << "/" << TestData.size() << ")" << endl;
+    //cout << "Test accuracy: " << test_accuracy / (double)TestData.size() * 100 << "% (" << test_accuracy << "/" << TestData.size() << ")" << endl;
     cout << "Test loss is: " << TestLoss.last_loss << endl;
 
     //! Counter stops and prints elapsed time;
@@ -93,7 +94,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     //! Writing data safely during parallel grid search;
     const std::string NameOfOutputFile = "grid_results.txt";
     std::ostringstream oss;
-    oss << argv[1] << " " << argv[2] << " " << argv[3] << " " << training_accuracy / (double)TrainingData.size() << " " << test_accuracy / (double)TestData.size() << " " << TestLoss.loss_value;
+    oss << "Eta: " << argv[1] << " Alpha: " << argv[2] << " Lambda: " << argv[3] << " Training accuracy: " << training_accuracy*100 / (double)TrainingData.size() << "%";
 
     const std::string Information = oss.str();
     writeToFileSafely(NameOfOutputFile, Information);

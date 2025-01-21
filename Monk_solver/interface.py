@@ -1,7 +1,7 @@
 # %%
 import numpy as np
 import multiprocessing as mp
-import Monk_solver.parameters as param
+import parameters as param
 import sys
 import subprocess
 from itertools import product
@@ -30,7 +30,6 @@ Step3_Default = 1
 Training_Steps_Default = 200
 CPU_Number = os.cpu_count()
 
-
 # Standard parameters for single run;
 Eta_single = 0.2
 Lambda_single = 0.0
@@ -53,7 +52,7 @@ def Compile():
     global IsCompilationGood
     try:
         process = subprocess.run(
-            ["cd Monksolver; g++", "-o", "main.exe; cd..", NomeFileDaCompilare],
+            ["g++", "-o", "main.exe", NomeFileDaCompilare],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -90,9 +89,7 @@ if __name__ == "__main__":
 
         global IsCompilationGood
         if IsCompilationGood:
-            subprocess.run(
-                ["rm", "grid_results.txt"], capture_output=True, text=True
-            )
+            subprocess.run(["rm", "grid_results.txt"], capture_output=True, text=True)
             try:
                 if (
                     (not eta_min_entry.get())
@@ -170,9 +167,7 @@ if __name__ == "__main__":
     def submit_values_for_single_training():
         global IsCompilationGood
         if IsCompilationGood:
-            subprocess.run(
-                ["rm", "grid_results.txt"], capture_output=True, text=True
-            )
+            subprocess.run(["rm", "grid_results.txt"], capture_output=True, text=True)
             try:
                 if (
                     (not single_eta_entry.get())
@@ -211,7 +206,7 @@ if __name__ == "__main__":
 
     try:
         process = subprocess.run(
-            ["cd Monk_solver; g++", "-o", "main.exe; cd..", NomeFileDaCompilare],
+            ["g++", "-o", "main.exe", NomeFileDaCompilare],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -243,7 +238,7 @@ if __name__ == "__main__":
     def recompile_action():
         try:
             subprocess.run(
-                ["cd Monk_solver; g++", "-o", "main.exe; cd..", "Monk_solver/main.cpp"],
+                ["g++", "-o", "main.exe", "Monk_solver/main.cpp"],
                 check=True,
             )
             print("Compilation successful.")
