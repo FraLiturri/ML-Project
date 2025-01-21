@@ -318,3 +318,10 @@ Eta: 3.7562499999999996 Alpha: 0.0 Lambda: 0.0 Training Accuracy: 1 Validation a
 Eta: 8.75125 Alpha: 0.0 Lambda: 0.0 Training Accuracy: 0.509434 Validation accuracy: 0.7 Val Loss: 0.299959 TP: 0 FP: 0 TN: 290 FN: 142 
 Eta: 0.9465625 Alpha: 0.0 Lambda: 0.0 Training Accuracy: 1 Validation accuracy: 1 Val Loss: 0.000480999 TP: 142 FP: 0 TN: 290 FN: 0 
 Eta: 0.3221875 Alpha: 0.0 Lambda: 0.0 Training Accuracy: 1 Validation accuracy: 1 Val Loss: 0.00104226 TP: 142 FP: 0 TN: 290 FN: 0 
+Eta: 0.001 Alpha: 0.0001 Lambda: 0.00001. Training Accuracy: 0.616352 Validation accuracy: 0.7 Val Loss: 0.217731 TP: 0 FP: 0 TN: 290 FN: 142 
+Eta: 0.001 Alpha: 0.0001 Lambda: 0.00001. Training Accuracy: 0.616352 Validation accuracy: 0.7 Val Loss: 0.221624 TP: 0 FP: 0 TN: 290 FN: 142 
+Eta: 0.01 Alpha: 0.0001 Lambda: 0.00001. Training Accuracy: 0.63522 Validation accuracy: 0.7 Val Loss: 0.249608 TP: 16 FP: 32 TN: 258 FN: 126 
+Eta: 0.01 Alpha: 0. Lambda: 0. Training Accuracy: 0.63522 Validation accuracy: 0.4 Val Loss: 0.2601 TP: 28 FP: 53 TN: 237 FN: 114 
+Eta: 0.1 Alpha: 0. Lambda: 0. Training Accuracy: 1 Validation accuracy: 1 Val Loss: 0.0131892 TP: 142 FP: 2 TN: 288 FN: 0 
+Eta: 1 Alpha: 0. Lambda: 0. Training Accuracy: 1 Validation accuracy: 1 Val Loss: 0.000576359 TP: 142 FP: 0 TN: 290 FN: 0 
+Eta: 1.5 Alpha: 0. Lambda: 0. Training Accuracy: 1 Validation accuracy: 1 Val Loss: 0.000256532 TP: 142 FP: 0 TN: 290 FN: 0 

@@ -18,15 +18,15 @@ NomeFileDaCompilare = "main.cpp"
 run_command = "./main.exe"
 
 # Standard parameters for grid search;
-Eta_Min_Default = 1e-2
-Eta_Max_Default = 10
+Eta_Min_Default = 5e-2
+Eta_Max_Default = 1
 Lambda_Min_Default = 0
 Lambda_Max_Default = 0
 Alpha_Min_Default = 0
 Alpha_Max_Default = 0
-Step1_Default = 32
-Step2_Default = 1
-Step3_Default = 1
+Step1_Default = 10
+Step2_Default = 10
+Step3_Default = 10
 Training_Steps_Default = 500
 CPU_Number = os.cpu_count()
 

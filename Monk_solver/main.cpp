@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     ofstream("NN_results/test_loss.txt", std::ios::trunc).close();
 
     //! Demiurge blows;
-    Demiurge NeuralNetwork(17, {4}, 1);  // Input units - hidden_units vector - output units;
+    Demiurge NeuralNetwork(17, {10}, 1);  // Input units - hidden_units vector - output units;
     Demiurge *pointerNN = &NeuralNetwork; // Pointer to NeuralNetwork for print_info, avoidable if not desired;
 
     //! Preparing data for training (and validation) and test phase;
