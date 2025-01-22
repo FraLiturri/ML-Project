@@ -21,14 +21,16 @@ run_command = "./main.exe"
 Eta_Min_Default = 5e-2
 Eta_Max_Default = 1
 Lambda_Min_Default = 0
-Lambda_Max_Default = 0
+Lambda_Max_Default = 1e-4
 Alpha_Min_Default = 0
-Alpha_Max_Default = 0
+Alpha_Max_Default = 0.1
 Step1_Default = 10
 Step2_Default = 10
 Step3_Default = 10
 Training_Steps_Default = 500
 CPU_Number = os.cpu_count()
+GridSize = Step1_Default*Step2_Default*Step3_Default
+
 
 
 # Standard parameters for single run;
@@ -44,10 +46,24 @@ def CallMain(Inputs):
         str(Inputs[1]),
         str(Inputs[2]),
         str(Inputs[3]),
+        str(Inputs[4])
     ]
     result = subprocess.run(command, capture_output=True, text=True)
     print(result.stdout)
 
+   
+def CallMainForValidation(Inputs):
+    command = [
+        run_command,
+        str(Inputs[0]),
+        str(Inputs[1]),
+        str(Inputs[2]),
+        str(Inputs[3]),
+        str(Inputs[4]),
+        str(Inputs[5])
+    ]
+    result = subprocess.run(command, capture_output=True, text=True)
+    print(result.stdout)
 
 def Compile():
     global IsCompilationGood
@@ -83,6 +99,51 @@ def BuildGrid(eta_1, eta_2, lambda_1, lambda_2, alpha_1, alpha_2, step1, step2, 
     )
     return MyGrid
 
+def DoAnalysis(training_steps, MyGrid):
+    grid_cell_number = np.loadtxt("grid_results.txt", usecols  = 1 )
+    val_loss =np.loadtxt("grid_results.txt", usecols  = 16 )
+    sort = np.argsort(val_loss)
+    val_loss = val_loss[sort]
+    grid_cell_number = grid_cell_number[sort]
+    #prendi le 10 migliori val losses
+    Best_val_losses = val_loss[0:32]
+    Best_grid_Numbers = grid_cell_number[0:32].astype(int)
+    print(Best_grid_Numbers)
+    BestParamsGrid = MyGrid.Grid[Best_grid_Numbers]
+    print(BestParamsGrid)
+    print(len(BestParamsGrid))
+
+    Inputs = [[x.Eta, x.Lambda, x.Alpha, training_steps, i, str(1)]
+                for i, x in enumerate(BestParamsGrid)]
+    
+
+    final_val_loss = np.array([])
+    for i in range(10):
+        with mp.Pool(processes=CPU_Number) as pool:
+            results = pool.map(CallMainForValidation, Inputs)
+            grid_cell_number = np.loadtxt("TopGridResults.txt", usecols  = 1 )[i*len(BestParamsGrid):(i+1)*len(BestParamsGrid)]
+            print(grid_cell_number)
+            val_loss =np.loadtxt("TopGridResults.txt", usecols  = 16 )[i*len(BestParamsGrid):(i+1)*len(BestParamsGrid)]
+            sort = np.argsort(grid_cell_number)
+            val_loss = val_loss[sort]
+            final_val_loss = np.append(final_val_loss, val_loss)
+
+    final_val_loss = final_val_loss.reshape(-1, len(BestParamsGrid)).T
+    print(final_val_loss)
+    #ok, ora e' tutto ordinato in ordine crescente: a dieci a dieci faccio la media....
+    val_mean = np.mean(final_val_loss, axis = 1)
+    print(val_mean)
+    val_std = np.std(final_val_loss, axis = 1)
+    Index = np.argmin(val_mean)
+    Best_val_loss = val_mean[Index]
+    Best_val_std = val_std[Index]
+                    
+    Message  = f"L'indice della loss piu' bassa e' {Index} e corrisponde ad una loss di {Best_val_loss} con varianza {Best_val_std}.\n La tripletta associata e' (Eta, Alpha, Lambda) = {BestParamsGrid[Index].Eta}, {BestParamsGrid[Index].Alpha}, {BestParamsGrid[Index].Lambda}"
+    print(Message)
+
+
+
+
 
 if __name__ == "__main__":
 
@@ -92,6 +153,15 @@ if __name__ == "__main__":
         if IsCompilationGood:
             subprocess.run(
                 ["rm", "grid_results.txt"], capture_output=True, text=True
+            )
+            subprocess.run(
+                ["touch", "grid_results.txt"], capture_output=True, text=True
+            )
+            subprocess.run(
+                ["rm", "TopGridResults.txt"], capture_output=True, text=True
+            )
+            subprocess.run(
+                ["touch", "TopGridResults.txt"], capture_output=True, text=True
             )
             try:
                 if (
@@ -117,34 +187,62 @@ if __name__ == "__main__":
                         Step2_Default,
                         Step3_Default,
                     )
+
+
                     Inputs = [
-                        [x.Eta, x.Lambda, x.Alpha, Training_Steps_Default]
-                        for x in MyGrid.Grid
+                        [x.Eta, x.Lambda, x.Alpha, Training_Steps_Default, i]
+                        for i, x in enumerate(MyGrid.Grid)
                     ]
+
+                    with mp.Pool(processes=CPU_Number) as pool:
+                        results = pool.map(CallMain, Inputs)
+                    
+                    DoAnalysis(Training_Steps_Default, MyGrid)
+
+                    """
+                    final_val_loss = np.array([])
+
                     for i in range(10):
                         with mp.Pool(processes=CPU_Number) as pool:
-                           results = pool.map(CallMain, Inputs)
+                            results = pool.map(CallMain, Inputs)
+                            grid_cell_number = np.loadtxt("grid_results.txt", usecols  = 1 )[i*GridSize:(i+1)*GridSize]
+                            print(grid_cell_number)
+                            val_loss =np.loadtxt("grid_results.txt", usecols  = 16 )[i*GridSize:(i+1)*GridSize]
+                            sort = np.argsort(grid_cell_number)
+                            val_loss = val_loss[sort]
+                            final_val_loss = np.append(final_val_loss, val_loss)
+
+                    final_val_loss = final_val_loss.reshape(-1, GridSize).T
+                    print(final_val_loss)
+                    #ok, ora e' tutto ordinato in ordine crescente: a dieci a dieci faccio la media....
+                    val_mean = np.mean(final_val_loss, axis = 1)
+                    print(val_mean)
+                    val_std = np.std(final_val_loss, axis = 1)
+                    Index = np.argmin(val_mean)
+                    Best_val_loss = val_mean[Index]
+                    Best_val_std = val_std[Index]
                     
-                    val_loss =np.loadtxt("grid_results.txt", usecols  = 14 )
-                    eta =np.loadtxt("grid_results.txt", usecols  = 1 )
-                    alpha =np.loadtxt("grid_results.txt", usecols  = 3 )
-                    Lambd = np.loadtxt("grid_results.txt", usecols  = 5 )
-                    indexes = np.argsort(eta)
+                    Message  = f"L'indice della loss piu' bassa e' {Index} e corrisponde ad una loss di {Best_val_loss} con varianza {Best_val_std}.\n La tripletta associata e' (Eta, Alpha, Lambda) = {MyGrid.Grid[Index].Eta}, {MyGrid.Grid[Index].Alpha}, {MyGrid.Grid[Index].Lambda}"
+                    print(Message)
+                    """
+                    #DoAnalysis(Training_Steps_Default)
+                    """
                     eta = eta[indexes]
                     val_loss = val_loss[indexes]
+
+                    #ok, ora devi fare la media sui training...
 
                     eta  = np.linspace(Eta_Min_Default, Eta_Max_Default, Step1_Default)
                     val_loss  = val_loss.reshape(-1, 10)
                     val_mean = np.mean(val_loss, axis =1)
                     val_std = np.std(val_loss, axis = 1)
 
-                    Index = np.argmin(val_mean)
-                    Message  = f"L'indice della loss piu' bassa e' {Index +1} e corrisponde ad una loss di {val_mean[Index]}.\n La tripletta associata e' (Eta, Alpha, Lambda) = ({eta[Index]})"
+                    Message  = f"L'indice della loss piu' bassa e' {Index +1} e corrisponde ad una loss di {val_mean[Index]}.\n La tripletta associata e' (Eta, Alpha, Lambda) = {eta[Index]}, {alpha[Index]}, {Lambd[Index]}"
                     print(Message)
                     plt.errorbar(eta, val_mean, val_std, fmt = '.')
                     plt.grid(ls = 'dashed')
                     plt.show()
-
+                    """
                 else:
                     eta_min = float(eta_min_entry.get())
                     eta_max = float(eta_max_entry.get())
@@ -179,9 +277,10 @@ if __name__ == "__main__":
                         step3,
                     )
                     Inputs = [
-                        [x.Eta, x.Lambda, x.Alpha, training_steps] for x in MyGrid.Grid
+                        [x.Eta, x.Lambda, x.Alpha, Training_Steps_Default, i]
+                        for i, x in enumerate(MyGrid.Grid)
                     ]
-                    for i in range(20):
+                    for i in range(10):
                         with mp.Pool(processes=CPU_Number) as pool:
                             results = pool.map(CallMain, Inputs)
                     val_loss =np.loadtxt("grid_results.txt", usecols  = 9 )
@@ -217,6 +316,7 @@ if __name__ == "__main__":
                         Lambda_single,
                         Alpha_single,
                         Training_Steps_Default,
+                        0
                     ]
                     print(
                         "---% Single run %---",
@@ -228,7 +328,7 @@ if __name__ == "__main__":
                     lambdaH = float(single_lambda_entry.get())
                     alphaH = float(single_alpha_entry.get())
                     training_Steps = float(single_training_steps_entry.get())
-                    Inputs = [etaH, lambdaH, alphaH, training_Steps]
+                    Inputs = [etaH, lambdaH, alphaH, training_Steps, 0]
                     if training_Steps < 0:
                         raise ValueError
                     if etaH < 0:

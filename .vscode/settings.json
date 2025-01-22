@@ -76,6 +76,18 @@
         "forward_list": "cpp",
         "iomanip": "cpp",
         "variant": "cpp",
-        "any": "cpp"
+        "any": "cpp",
+        "*.tcc": "cpp",
+        "bitset": "cpp",
+        "codecvt": "cpp",
+        "condition_variable": "cpp",
+        "cstdarg": "cpp",
+        "cwctype": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "string_view": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp",
+        "__nullptr": "cpp"
     }
 }

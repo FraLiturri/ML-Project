@@ -9,7 +9,6 @@
 #include "validation.hpp"
 #include "eigen_path.hpp"
 
-
 using namespace Eigen;
 using namespace std;
 
@@ -41,7 +40,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     //! Splitting data for validation part;
     Validation Validator;
     Validator.HoldOut(TrainingData, TrainingResults, ValidationData, ValidationResults, InternalTestData, InternalTestResults, TrainingData.size() - 10, TrainingData.size());
-    
+
     //! Printing NN general info: can be avoided if not desired;
     print_info(pointerNN);
 
@@ -51,7 +50,6 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     Hidden_Layer output_layer;
 
     Loss TrainingLoss, TestLoss, ValidationLoss;
-
 
     //! Output computing and training algorithm;
     for (int n = 0; n < atoi(argv[4]); n++)
@@ -97,7 +95,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
 
         outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
         FinalResult == TestResults[k] ? test_accuracy++ : 0;
-        
+
         if (FinalResult == TestResults[k])
         {
             FinalResult == 1 ? TP++ : TN++;
@@ -109,7 +107,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
 
         TestLoss.calculator("MSE", "NN_results/test_loss.txt", outputs[weights.size()][0], TestResults[k], TestResults.size());
     }
-    cout << "Eta: " << stod(argv[1]) << "\nAlpha: " << stod(argv[2]) << "\nLambda: " << stod(argv[2]) << endl
+    cout << "Eta: " << stod(argv[1]) << "\nAlpha: " << stod(argv[2]) << "\nLambda: " << stod(argv[3]) << endl
          << endl;
 
     cout << "Validation accuracy: " << validation_accuracy / (double)ValidationData.size() * 100 << "% (" << validation_accuracy << "/" << (double)ValidationData.size() << ")" << endl;
@@ -123,9 +121,18 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
          << endl;
 
     //! Writing data safely during parallel grid search;
-    const std::string NameOfOutputFile = "grid_results.txt";
+    std::string NameOfOutputFile;
+    if(!argv[6])
+    {
+        NameOfOutputFile = "grid_results.txt";
+    }
+    else
+    {
+        NameOfOutputFile = "TopGridResults.txt";
+    }
+    
     std::ostringstream oss;
-    oss << "Eta: " <<argv[1] << " Alpha: " << argv[2] << " Lambda: " << argv[3] << " Training Accuracy: " << training_accuracy / (double)TrainingData.size() << " Validation accuracy: " << validation_accuracy / (double)ValidationData.size() << " Val Loss: " << ValidationLoss.loss_value << " TP: " << TP << " FP: " << FP << " TN: " << TN << " FN: " << FN << " ";
+    oss << "Grid_Cell: "<< argv[5] << " Eta: " << argv[1] << " Alpha: " << argv[2] << " Lambda: " << argv[3] << " Training Accuracy: " << training_accuracy / (double)TrainingData.size() << " Validation accuracy: " << validation_accuracy / (double)ValidationData.size() << " Val Loss: " << ValidationLoss.loss_value << " TP: " << TP << " FP: " << FP << " TN: " << TN << " FN: " << FN << " ";
 
     const std::string Information = oss.str();
     writeToFileSafely(NameOfOutputFile, Information);
