@@ -5,12 +5,6 @@ from matplotlib import pyplot as plt
 import sys
 from decimal import Decimal, ROUND_DOWN
 
-
-def tronca_decimal(numero, cifre_decimali):
-    formato = f"1.{'0' * cifre_decimali}"  # Crea il formato, ad esempio "1.00"
-    return Decimal(numero).quantize(Decimal(formato), rounding=ROUND_DOWN)
-
-
 def run_exe(file_path, n):
     for i in range(n):
         try:
@@ -34,9 +28,9 @@ if str(sys.argv[1]) == "plot":
     val_loss = np.loadtxt(val_loss_path)
     tr_loss = np.loadtxt(training_loss_path)
 
-    print(f"Training loss converges to: {tronca_decimal(tr_loss[len(tr_loss)-1], 4)}.")
-    print(f"Validation loss converges to: {tronca_decimal(val_loss[len(val_loss)-1], 4)}.")
-    print(f"Test loss is: {tronca_decimal(test_loss, 4)}.\n")
+    print(f"Training loss converges to: {tr_loss[len(tr_loss)-1]}.")
+    print(f"Validation loss converges to: {val_loss[len(val_loss)-1]}.")
+    print(f"Test loss is: {test_loss}.\n")
 
     x_val = np.linspace(1, len(val_loss), len(val_loss))
     x_tr = np.linspace(1, len(tr_loss), len(tr_loss))
@@ -60,7 +54,7 @@ elif str(sys.argv[1]) == "loss_mean":
     mean_loss = loss.mean()
     std_loss = loss.std()
     print(
-        f"\nMean loss is: {tronca_decimal(mean_loss, 3)} +/- {tronca_decimal(std_loss,3)}.\n"
+        f"\nMean loss is: {mean_loss} +/- {std_loss}.\n"
     )
 
 elif str(sys.argv[1]) == "iterate":

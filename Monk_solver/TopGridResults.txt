@@ -318,3 +318,16 @@ Grid_Cell: 5 Eta: 0.81 Alpha: 2e-05 Lambda: 0.0 Training Accuracy: 1 Validation 
 Grid_Cell: 19 Eta: 0.9049999999999999 Alpha: 1e-05 Lambda: 0.0 Training Accuracy: 1 Validation accuracy: 1 Val Loss: 0.00052768 TP: 142 FP: 0 TN: 290 FN: 0 
 Grid_Cell: 20 Eta: 0.715 Alpha: 4e-05 Lambda: 0.0 Training Accuracy: 1 Validation accuracy: 1 Val Loss: 0.000769297 TP: 142 FP: 0 TN: 290 FN: 0 
 Grid_Cell: 9 Eta: 0.525 Alpha: 6.000000000000001e-05 Lambda: 0.0 Training Accuracy: 1 Validation accuracy: 1 Val Loss: 0.00105403 TP: 142 FP: 0 TN: 290 FN: 0 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
+Grid_Cell: 
