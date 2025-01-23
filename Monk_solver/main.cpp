@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     ofstream("NN_results/test_loss.txt", std::ios::trunc).close();
 
     //! Demiurge blows;
-    Demiurge NeuralNetwork(17, {10, 10}, 1);   // Input units - hidden_units vector - output units;
+    Demiurge NeuralNetwork(17, {20}, 1);   // Input units - hidden_units vector - output units;
     Demiurge *pointerNN = &NeuralNetwork; // Pointer to NeuralNetwork for print_info, avoidable if not desired;
 
     //! Preparing data for training (and validation) and test phase;
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     Validator.HoldOut(TrainingData, TrainingResults, ValidationData, ValidationResults, InternalTestData, InternalTestResults, TrainingData.size() - 5, TrainingData.size());
 
     //! Printing NN general info: can be avoided if not desired;
-    // print_info(pointerNN);
+    print_info(pointerNN);
 
     //! Neural network construction;
     Input_Layer input_layer;
@@ -57,8 +57,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
         {
             input_layer.forward_pass(TrainingData[k]);
             first_hidden.forward_pass("sigmoid", 1);
-            second_hidden.forward_pass("sigmoid", 2);
-            output_layer.forward_pass("sigmoid", 3, true);
+            output_layer.forward_pass("sigmoid", 2, true);
 
             output_layer.BackPropagation(TrainingResults[k], stod(argv[1]), stod(argv[2]), stod(argv[3]));
             TrainingLoss.calculator("MSE", "NN_results/training_loss.txt", outputs[weights.size()][0], TrainingResults[k], TrainingResults.size());
@@ -80,8 +79,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
         {
             input_layer.forward_pass(ValidationData[k]);
             first_hidden.forward_pass("sigmoid", 1);
-            second_hidden.forward_pass("sigmoid", 2);
-            output_layer.forward_pass("sigmoid", 3, true);
+            output_layer.forward_pass("sigmoid", 2, true);
 
             ValidationLoss.calculator("MSE", "NN_results/val_loss.txt", outputs[weights.size()][0], ValidationResults[k], ValidationResults.size());
 
@@ -112,8 +110,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     {
         input_layer.forward_pass(TestData[k]);
         first_hidden.forward_pass("sigmoid", 1);
-        second_hidden.forward_pass("sigmoid", 2);
-        output_layer.forward_pass("sigmoid", 3, true);
+        output_layer.forward_pass("sigmoid", 2, true);
 
         outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
         FinalResult == TestResults[k] ? test_accuracy++ : 0;
@@ -122,8 +119,8 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     }
 
     // cout << "Eta: " << stod(argv[1]) << "\nAlpha: " << stod(argv[2]) << "\nLambda: " << stod(argv[3]) << endl << endl;
-    // cout << "Validation accuracy: " << validation_accuracy / (double)ValidationData.size() * 100 << "% (" << validation_accuracy << "/" << (double)ValidationData.size() << ")" << endl;
-    // cout << "Val loss is: " << ValidationLoss.last_loss << endl;
+    //  cout << "Validation accuracy: " << validation_accuracy / (double)ValidationData.size() * 100 << "% (" << validation_accuracy << "/" << (double)ValidationData.size() << ")" << endl;
+    //  cout << "Val loss is: " << ValidationLoss.last_loss << endl;
     cout << "Test accuracy: " << test_accuracy / (double)TestData.size() * 100 << "% (" << test_accuracy << "/" << TestData.size() << ")" << endl;
     cout << "Test loss is: " << TestLoss.last_loss << endl;
 

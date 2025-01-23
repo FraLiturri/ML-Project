@@ -73,7 +73,7 @@ void Hidden_Layer::BackPropagation(variant<double, VectorXd> d, double eta, doub
             }
 
             weights[i - 1] = weights[i - 1] + update;
-            weights[i - 1].col(0).setConstant(1);
+
             prev_updates[i - 1] = update;
             storer.push_back(delta);
         }
@@ -98,7 +98,7 @@ void Hidden_Layer::BackPropagation(variant<double, VectorXd> d, double eta, doub
             }
 
             weights[i - 1] = weights[i - 1] + update;
-            weights[i - 1].col(0).setConstant(1);
+            
             prev_updates[i - 1] = update;
             storer.push_back(delta);
         }
@@ -142,12 +142,7 @@ void Hidden_Layer::RandomTraining(variant<double, VectorXd> d, double eta, doubl
 
     update = delta * outputs[i - 1].transpose();
     weights[i - 1] = weights[i - 1] + eta * update;
-    weights[i - 1].col(0).setConstant(1);
 
-    function_strings.clear();
-    outputs.clear();
-    next_inputs.clear();
-    units_output.setZero();
 }
 
 #endif

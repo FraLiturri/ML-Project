@@ -22,6 +22,8 @@ public:
     void forward_pass(VectorXd input)
     {
         units_output = weights[0] * input;
+        units_output = units_output + biases[0];
+
         outputs.insert(outputs.begin(), input);
         next_inputs.insert(next_inputs.begin(), units_output);
     };
@@ -48,14 +50,15 @@ public:
 
         if (!isLast)
         {
-            units_output = weights[depth] * inputs;                        // Calculating outputs vector;
+            units_output = weights[depth] * inputs; // Calculating outputs vector;
+            units_output = units_output + biases[depth]; //Adding bias term; 
+
             next_inputs.insert(next_inputs.begin() + depth, units_output); // Storing outputs;
         }
     }
 
     void RandomTraining(variant<double, VectorXd> d, double eta, double alpha, double lambda);  // Random training: in this case takes a double (d) since monk is a class. problem;
     void BackPropagation(variant<double, VectorXd> d, double eta, double alpha, double lambda); // BackProp. algorithm: in this case takes a double (d) since monk is a class. problem;
-    void RMSprop(variant<double, VectorXd> d, double eta, double alpha, double lambda);         // Rprop. algorithm;
 
 private:
     bool isLast; // Defined to access isOutputlayer's value;

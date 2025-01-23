@@ -12,11 +12,11 @@ using namespace Eigen;
 vector<MatrixXd> weights; // i-th component is the weights matrix of i-th and i+1-th layer;
 vector<VectorXd> outputs; // i-th component is the output (with weights) of i-the layer;
 vector<VectorXd> next_inputs;
-vector<MatrixXd> prev_updates; // necessary for training;
+vector<MatrixXd> prev_updates, biases; // necessary for training;
 
-VectorXd units_output; // auxiliary vector;
+VectorXd units_output, bias; // auxiliary vector;
 
-int last_units; 
+int last_units;
 
 //! Demiurge class: the Creator;
 class Demiurge
@@ -30,7 +30,7 @@ public:
         // Storing some important info about NN;
         in_units = inputs_units;
         out_units = output_units;
-        last_units = output_units; 
+        last_units = output_units;
         hidden_and_out_units = hidden_units;
         hidden_and_out_units.push_back(output_units); // Adds output's units to vector;
         hidden_layers = hidden_units.size();
@@ -48,11 +48,14 @@ public:
             MatrixXd ghost = MatrixXd::NullaryExpr(rows, cols, []()
                                                    { return Eigen::internal::random<double>(0, 0); });
 
-            weight.col(0).setConstant(1); //! Bias terms (Check);
+            bias.conservativeResize(rows);
+            bias.setConstant(1);
+
             if (i != hidden_layers + 1)
             {
                 weights.push_back(weight); // Storing weights;
                 prev_updates.push_back(ghost);
+                biases.push_back(bias);
             }
         }
     };
