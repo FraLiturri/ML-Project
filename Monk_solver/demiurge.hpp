@@ -11,8 +11,8 @@ using namespace Eigen;
 
 vector<MatrixXd> weights; // i-th component is the weights matrix of i-th and i+1-th layer;
 vector<VectorXd> outputs; // i-th component is the output (with weights) of i-the layer;
-vector<VectorXd> next_inputs;
-vector<MatrixXd> prev_updates, biases; // necessary for training;
+vector<VectorXd> next_inputs, biases;
+vector<MatrixXd> prev_updates; // necessary for training;
 
 VectorXd units_output, bias; // auxiliary vector;
 

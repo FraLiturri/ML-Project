@@ -11,13 +11,13 @@ using namespace Eigen;
 
 vector<MatrixXd> weights; // i-th component is the weights matrix of i-th and i+1-th layer;
 vector<VectorXd> outputs; // i-th component is the output (with weights) of i-the layer;
-vector<VectorXd> next_inputs;
+vector<VectorXd> next_inputs, biases;
 
 vector<MatrixXd> prev_updates; // necessary for training: Nesterov;
 vector<MatrixXd> V_t, M_t;     // neceessary for Adam training;
 
 vector<int> hidden_and_out_units, counters;
-VectorXd units_output; // auxiliar vector;
+VectorXd units_output, bias; // auxiliar vector;
 
 int first_units, last_units;
 
@@ -56,7 +56,8 @@ public:
             MatrixXd v_aux = MatrixXd::NullaryExpr(rows, cols, []()
                                                    { return Eigen::internal::random<double>(0, 0); });
 
-            weight.col(0).setConstant(1); //! Bias terms (Check);
+            bias.conservativeResize(rows); 
+            bias.setConstant(1); 
 
             if (i != hidden_layers + 1)
             {
@@ -64,7 +65,8 @@ public:
                 prev_updates.push_back(ghost);
                 V_t.push_back(v_aux);
                 M_t.push_back(m_aux);
-                counters.push_back(0); 
+                counters.push_back(0);
+                biases.push_back(bias); 
             }
         }
     };

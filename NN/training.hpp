@@ -23,7 +23,7 @@ MatrixXd update, auxiliar, gradient, gradient_square, sqrt_v, epsilon, M_hat, V_
 double delta_k; // auxiliar double;
 int i, size;
 
-double beta_1 = 0.9, beta_2 = 0.999;
+double beta_1 = 0.9, beta_2 = 0.999; // for Adam optimizer;
 
 VectorXd net_calculator(int layer_number)
 {
@@ -74,12 +74,10 @@ void Hidden_Layer::BackPropagation(variant<double, VectorXd> d, double eta, doub
             }
 
             update = eta * delta * outputs[i - 1].transpose();
-
             weights[i - 1] = weights[i - 1] + update;
-            weights[i - 1].col(0).setConstant(1);
 
             prev_updates[i - 1] = update;
-            storer.push_back(delta);
+            // storer.push_back(delta);
         }
 
         else
@@ -103,10 +101,8 @@ void Hidden_Layer::BackPropagation(variant<double, VectorXd> d, double eta, doub
             }
 
             weights[i - 1] = weights[i - 1] + update;
-            weights[i - 1].col(0).setConstant(1);
-
             prev_updates[i - 1] = update;
-            storer.push_back(delta);
+            // storer.push_back(delta);
         }
         i--;
     };
@@ -114,8 +110,8 @@ void Hidden_Layer::BackPropagation(variant<double, VectorXd> d, double eta, doub
     function_strings.clear();
     next_inputs.clear();
     units_output.setZero();
-    storer.clear();
 }
+
 void Hidden_Layer::RandomTraining(variant<double, VectorXd> d, double eta, double alpha = 0, double lambda = 0)
 {
     i = weights.size();
@@ -157,7 +153,6 @@ void Hidden_Layer::RandomTraining(variant<double, VectorXd> d, double eta, doubl
         }
 
         weights[i - 1] = weights[i - 1] + update;
-        weights[i - 1].col(0).setConstant(1);
 
         prev_updates[i - 1] = update;
         storer.push_back(delta);
@@ -167,6 +162,7 @@ void Hidden_Layer::RandomTraining(variant<double, VectorXd> d, double eta, doubl
     next_inputs.clear();
     units_output.setZero();
 }
+
 void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta)
 {
     i = weights.size();
@@ -204,7 +200,7 @@ void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta)
             gradient_square = (gradient.array().square()).matrix();
             epsilon.conservativeResize(gradient.rows(), gradient.cols());
 
-            if (counters[i-1] == 0)
+            if (counters[i - 1] == 0)
             {
                 epsilon.setConstant(pow(10, -8));
             }
@@ -212,23 +208,21 @@ void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta)
             M_t[i - 1] = M_t[i - 1] * beta_1 + (1 - beta_1) * gradient;
             V_t[i - 1] = V_t[i - 1] * beta_2 + (1 - beta_2) * gradient_square;
 
-            M_hat = M_t[i - 1] / (1 - pow(beta_1, counters[i-1]+1));
-            V_hat = V_t[i - 1] / (1 - pow(beta_2, counters[i-1]+1));
+            M_hat = M_t[i - 1] / (1 - pow(beta_1, counters[i - 1] + 1));
+            V_hat = V_t[i - 1] / (1 - pow(beta_2, counters[i - 1] + 1));
 
-            sqrt_v = (V_t[i - 1].array().sqrt()).matrix();
+            sqrt_v = (V_hat.array().sqrt()).matrix();
             sqrt_v = sqrt_v + epsilon;
 
-            update = (M_t[i - 1].array() / sqrt_v.array()).matrix();
+            update = (M_hat.array() / sqrt_v.array()).matrix();
 
             weights[i - 1] = weights[i - 1] + eta * update;
-            weights[i - 1].col(0).setConstant(1);
-
-            counters[i-1]++; 
+            counters[i - 1]++;
         }
 
         else
-        {
-           /*  net_t = net_calculator(i);
+        {/* 
+            net_t = net_calculator(i);
             func_choiser(function_strings[i - 1]);
             delta = weights[i].transpose() * delta;
 
@@ -241,28 +235,27 @@ void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta)
             gradient_square = (gradient.array().square()).matrix();
             epsilon.conservativeResize(gradient.rows(), gradient.cols());
 
+            if (counters[i - 1] == 0)
+            {
+                epsilon.setConstant(pow(10, -8));
+            }
+
             M_t[i - 1] = M_t[i - 1] * beta_1 + (1 - beta_1) * gradient;
             V_t[i - 1] = V_t[i - 1] * beta_2 + (1 - beta_2) * gradient_square;
 
-            M_hat = M_t[i - 1] / (double)(1 - pow(beta_1, counters[i-1]+1));
-            V_hat = V_t[i - 1] / (double)(1 - pow(beta_2, counters[i-1]+1));
+            M_hat = M_t[i - 1] / (1 - pow(beta_1, counters[i - 1] + 1));
+            V_hat = V_t[i - 1] / (1 - pow(beta_2, counters[i - 1] + 1));
 
             sqrt_v = (V_hat.array().sqrt()).matrix();
             sqrt_v = sqrt_v + epsilon;
 
             update = (M_hat.array() / sqrt_v.array()).matrix();
-
             weights[i - 1] = weights[i - 1] + eta * update;
-            weights[i - 1].col(0).setConstant(1);
 
-            counters[i-1]++;  */
+            counters[i - 1]++; */
         }
         i--;
     };
-
-    function_strings.clear();
-    next_inputs.clear();
-    units_output.setZero();
 }
 
 #endif

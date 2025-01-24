@@ -63,14 +63,27 @@ double tan_der(double x)
 double leaky_relu(double x)
 {
     double res;
-    x < 0 ? res = leaky_coeff * x : res = x;
+    x < 0 ? res = leaky_coeff *x : res = x;
     return res;
 }
 double leaky_der(double x)
 {
     double der_res;
     x < 0 ? der_res = leaky_coeff : der_res = 1;
-    return der_res; 
+    return der_res;
+}
+
+double elu(double x)
+{
+    double res;
+    x > 0 ? res = x : res = exp(x) - 1;
+    return res;
+}
+double der_elu(double x)
+{
+    double res_der;
+    x > 0 ? res_der = 1 : res_der = exp(x);
+    return res_der;
 }
 
 // Defining pointer to activation function(s) and derivative(s);
@@ -109,6 +122,11 @@ void func_choiser(std::string choice)
     {
         act_func = leaky_relu;
         der_act_func = leaky_der;
+    }
+    else if (choice == "elu")
+    {
+        act_func = elu;
+        der_act_func = elu;
     }
     else
     {
