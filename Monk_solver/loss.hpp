@@ -2,7 +2,6 @@
 #define loss
 
 #include "lib.hpp"
-
 #include "eigen_path.hpp"
 
 using namespace std;
