@@ -103,12 +103,11 @@ def BuildGrid(eta_1, eta_2, lambda_1, lambda_2, alpha_1, alpha_2, step1, step2, 
 
 def DoAnalysis(training_steps, MyGrid):
     grid_cell_number = np.loadtxt("grid_results.txt", usecols=1)
-    val_loss = np.loadtxt("grid_results.txt", usecols=9)
+    val_loss = np.loadtxt("grid_results.txt", usecols=10)
     sort = np.argsort(val_loss)
     val_loss = val_loss[sort]
     grid_cell_number = grid_cell_number[sort]
     # prendi le 10 migliori val losses
-    Best_val_losses = val_loss[0:8]
     Best_grid_Numbers = grid_cell_number[0:8].astype(int)
     print(Best_grid_Numbers)
     BestParamsGrid = MyGrid.Grid[Best_grid_Numbers]
@@ -128,7 +127,7 @@ def DoAnalysis(training_steps, MyGrid):
                 i * len(BestParamsGrid) : (i + 1) * len(BestParamsGrid)
             ]
             print(grid_cell_number)
-            val_loss = np.loadtxt("TopGridResults.txt", usecols=9)[
+            val_loss = np.loadtxt("TopGridResults.txt", usecols=10)[
                 i * len(BestParamsGrid) : (i + 1) * len(BestParamsGrid)
             ]
             sort = np.argsort(grid_cell_number)
@@ -276,21 +275,13 @@ if __name__ == "__main__":
                         step3,
                     )
                     Inputs = [
-                        [x.Eta, x.Lambda, x.Alpha, Training_Steps_Default, i]
+                        [x.Eta, x.Lambda, x.Alpha, training_steps, i]
                         for i, x in enumerate(MyGrid.Grid)
                     ]
-                    for i in range(10):
-                        with mp.Pool(processes=CPU_Number) as pool:
-                            results = pool.map(CallMain, Inputs)
-                    val_loss = np.loadtxt("grid_results.txt", usecols=9)
-                    eta = np.loadtxt("grid_results.txt", usecols=1)
-                    alpha = np.loadtxt("grid_results.txt", usecols=3)
-                    Lambda = np.loadtxt("grid_results.txt", usecols=5)
-                    Index = np.argmin(val_loss)
-                    Message = f"L'indice della loss piu' bassa e' {Index} e corrisponde ad una loss di {val_loss[Index]}.\n La tripletta associata e' (Eta, Alpha, Lambda) = ({eta[Index]},{alpha[Index]},{Lambda[Index]})"
-                    print(Message)
-                    plt.plot(eta, val_loss, ".")
-                    plt.show()
+                    with mp.Pool(processes=CPU_Number) as pool:
+                        results = pool.map(CallMain, Inputs)
+                    
+                    DoAnalysis(training_steps, MyGrid)
 
             except ValueError:
                 messagebox.showerror("Error", "Please insert valid values.")

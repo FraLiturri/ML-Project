@@ -24,9 +24,9 @@ Lambda_Min_Default = 0
 Lambda_Max_Default = 1e-4
 Alpha_Min_Default = 0
 Alpha_Max_Default = 0.1
-Step1_Default = 10
-Step2_Default = 10
-Step3_Default = 10
+Step1_Default = 4
+Step2_Default = 4
+Step3_Default = 2
 Training_Steps_Default = 500
 CPU_Number = os.cpu_count()
 GridSize = Step1_Default*Step2_Default*Step3_Default
@@ -277,21 +277,13 @@ if __name__ == "__main__":
                         step3,
                     )
                     Inputs = [
-                        [x.Eta, x.Lambda, x.Alpha, Training_Steps_Default, i]
+                        [x.Eta, x.Lambda, x.Alpha, training_steps, i]
                         for i, x in enumerate(MyGrid.Grid)
                     ]
-                    for i in range(10):
-                        with mp.Pool(processes=CPU_Number) as pool:
-                            results = pool.map(CallMain, Inputs)
-                    val_loss =np.loadtxt("grid_results.txt", usecols  = 9 )
-                    eta =np.loadtxt("grid_results.txt", usecols  = 1 )
-                    alpha =np.loadtxt("grid_results.txt", usecols  = 3 )
-                    Lambd = np.loadtxt("grid_results.txt", usecols  = 5 )
-                    Index = np.argmin(val_loss)
-                    Message  = f"L'indice della loss piu' bassa e' {Index} e corrisponde ad una loss di {val_loss[Index]}.\n La tripletta associata e' (Eta, Alpha, Lambda) = ({eta[Index]},{alpha[Index]},{Lambd[Index]})"
-                    print(Message)
-                    plt.plot(eta, val_loss, ".")
-                    plt.show()
+                    with mp.Pool(processes=CPU_Number) as pool:
+                        results = pool.map(CallMain, Inputs)
+                    
+                    DoAnalysis(training_steps, MyGrid)
 
             except ValueError:
                 messagebox.showerror("Error", "Please insert valid values.")
