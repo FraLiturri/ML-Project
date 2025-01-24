@@ -33,12 +33,12 @@ VectorXd net_calculator(int layer_number)
 void Hidden_Layer::BackPropagation(variant<double, VectorXd> d, double eta, double alpha = 0, double lambda = 0)
 {
     i = weights.size();
+    delta.setZero();
     while (i > 0)
     {
         prev_weight = weights[i - 1]; // For Tikhonov regularization;
         if (i == weights.size())
         {
-            delta.setZero();
             func_choiser(function_strings[i - 1]);
             net_t = net_calculator(i);
 
