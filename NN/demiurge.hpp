@@ -56,17 +56,19 @@ public:
             MatrixXd v_aux = MatrixXd::NullaryExpr(rows, cols, []()
                                                    { return Eigen::internal::random<double>(0, 0); });
 
-            bias.conservativeResize(rows); 
-            bias.setConstant(1); 
+            bias.conservativeResize(rows);
+            bias.setConstant(1);
 
             if (i != hidden_layers + 1)
             {
                 weights.push_back(weight);
                 prev_updates.push_back(ghost);
+
                 V_t.push_back(v_aux);
                 M_t.push_back(m_aux);
+
                 counters.push_back(0);
-                biases.push_back(bias); 
+                biases.push_back(bias);
             }
         }
     };
