@@ -3,8 +3,10 @@
 
 #include <cmath>
 #include <string>
+#include <iostream>
 
 using namespace std;
+
 double leaky_coeff = 0.1;
 
 // Defining activation functions and their derivatives (needed for Backpropagation);
@@ -131,7 +133,7 @@ void func_choiser(std::string choice)
     else
     {
         cout << "\nChoice unavailable.\n"
-             << endl;
+                  << endl;
     }
 }
 

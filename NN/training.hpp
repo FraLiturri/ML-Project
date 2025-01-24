@@ -4,14 +4,13 @@
 #include "layer.hpp"
 #include "demiurge.hpp"
 #include "activation_functions.hpp"
+#include "eigen_path.hpp"
 
 #include <any>
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <stdexcept>
-
-#include "C:/Users/franc/OneDrive/Desktop/Sync/Eigen/Eigen/Dense"
 
 using namespace std;
 using namespace Eigen;
@@ -166,14 +165,15 @@ void Hidden_Layer::RandomTraining(variant<double, VectorXd> d, double eta, doubl
 void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta)
 {
     i = weights.size();
-    
+
     while (i > 0)
-    {counters[0]++;
+    {
+        counters[0]++;
         if (i == weights.size())
         {
             func_choiser(function_strings[i - 1]);
             net_t = net_calculator(i);
-            //eta = eta * sqrt(1 - pow(beta_2, counters[0])) / (double)(1 - pow(beta_1, counters[0]));
+            // eta = eta * sqrt(1 - pow(beta_2, counters[0])) / (double)(1 - pow(beta_1, counters[0]));
 
             if (holds_alternative<double>(d))
             {
@@ -223,37 +223,37 @@ void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta)
 
         else
         {
-           /*  net_t = net_calculator(i);
-            func_choiser(function_strings[i - 1]);
+            /*  net_t = net_calculator(i);
+             func_choiser(function_strings[i - 1]);
 
-            delta = weights[i].transpose() * delta;
-            //eta = eta * sqrt(1 - pow(beta_2, counters[0])) / (double)(1 - pow(beta_1, counters[0]));
+             delta = weights[i].transpose() * delta;
+             //eta = eta * sqrt(1 - pow(beta_2, counters[0])) / (double)(1 - pow(beta_1, counters[0]));
 
-            for (int k = 0; k < delta.size(); k++)
-            {
-                delta[k] = delta[k] * der_act_func(net_t[k]);
-            }
+             for (int k = 0; k < delta.size(); k++)
+             {
+                 delta[k] = delta[k] * der_act_func(net_t[k]);
+             }
 
-            gradient = delta * outputs[i - 1].transpose();
-            gradient_square = (gradient.array().square()).matrix();
-            epsilon.conservativeResize(gradient.rows(), gradient.cols());
+             gradient = delta * outputs[i - 1].transpose();
+             gradient_square = (gradient.array().square()).matrix();
+             epsilon.conservativeResize(gradient.rows(), gradient.cols());
 
-            if (counters[0] == 0)
-            {
-                epsilon.setConstant(pow(10, -8));
-            }
+             if (counters[0] == 0)
+             {
+                 epsilon.setConstant(pow(10, -8));
+             }
 
-            M_t[i - 1] = M_t[i - 1] * beta_1 + (1 - beta_1) * gradient;
-            V_t[i - 1] = V_t[i - 1] * beta_2 + (1 - beta_2) * gradient_square;
+             M_t[i - 1] = M_t[i - 1] * beta_1 + (1 - beta_1) * gradient;
+             V_t[i - 1] = V_t[i - 1] * beta_2 + (1 - beta_2) * gradient_square;
 
-            M_hat = M_t[i - 1] / (1 - pow(beta_1, counters[0]));
-            V_hat = V_t[i - 1] / (1 - pow(beta_2, counters[0]));
+             M_hat = M_t[i - 1] / (1 - pow(beta_1, counters[0]));
+             V_hat = V_t[i - 1] / (1 - pow(beta_2, counters[0]));
 
-            sqrt_v = (V_hat.array().sqrt()).matrix();
-            sqrt_v = sqrt_v + epsilon;
+             sqrt_v = (V_hat.array().sqrt()).matrix();
+             sqrt_v = sqrt_v + epsilon;
 
-            update = (M_hat.array() / sqrt_v.array()).matrix();
-            weights[i - 1] = weights[i - 1] + eta * update;  */
+             update = (M_hat.array() / sqrt_v.array()).matrix();
+             weights[i - 1] = weights[i - 1] + eta * update;  */
         }
         i--;
     };
