@@ -42,13 +42,13 @@ double threshold_der(double x)
 double relu(double x)
 {
     double relu_res;
-    x < 0 ? relu_res = 0 : relu_res = x;
+    x <= 0 ? relu_res = 0 : relu_res = x;
     return relu_res;
 }
 double relu_der(double x)
 {
     double relu_res;
-    x < 0 ? relu_res = 0 : relu_res = 1;
+    x <= 0 ? relu_res = 0 : relu_res = 1;
     return relu_res;
 }
 
@@ -65,13 +65,13 @@ double tan_der(double x)
 double leaky_relu(double x)
 {
     double res;
-    x < 0 ? res = leaky_coeff *x : res = x;
+    x <= 0 ? res = leaky_coeff *x : res = x;
     return res;
 }
 double leaky_der(double x)
 {
     double der_res;
-    x < 0 ? der_res = leaky_coeff : der_res = 1;
+    x <= 0 ? der_res = leaky_coeff : der_res = 1;
     return der_res;
 }
 

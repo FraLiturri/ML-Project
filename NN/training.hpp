@@ -11,18 +11,19 @@
 #include <vector>
 #include <cmath>
 #include <stdexcept>
+#include <cmath>
 
 using namespace std;
 using namespace Eigen;
 
 VectorXd delta, net_t, net, vec_aux;
 vector<VectorXd> storer;
-MatrixXd update, auxiliar, gradient, gradient_square, sqrt_v, epsilon, M_hat, V_hat;
+MatrixXd update, auxiliar, gradient, gradient_square, sqrt_v, M_hat, V_hat;
 
 double delta_k; // auxiliar double;
 int i, size;
 
-double beta_1 = 0.9, beta_2 = 0.999; // for Adam optimizer;
+double beta_1 = 0.9, beta_2 = 0.999, epsilon = 1e-8; // for Adam optimizer;
 
 VectorXd net_calculator(int layer_number)
 {
@@ -110,7 +111,6 @@ void Hidden_Layer::BackPropagation(variant<double, VectorXd> d, double eta, doub
     next_inputs.clear();
     units_output.setZero();
 }
-
 void Hidden_Layer::RandomTraining(variant<double, VectorXd> d, double eta, double alpha = 0, double lambda = 0)
 {
     i = weights.size();
@@ -161,8 +161,7 @@ void Hidden_Layer::RandomTraining(variant<double, VectorXd> d, double eta, doubl
     next_inputs.clear();
     units_output.setZero();
 }
-
-void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta)
+void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta, double lambda = 0)
 {
     i = weights.size();
 
@@ -173,7 +172,7 @@ void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta)
         {
             func_choiser(function_strings[i - 1]);
             net_t = net_calculator(i);
-            // eta = eta * sqrt(1 - pow(beta_2, counters[0])) / (double)(1 - pow(beta_1, counters[0]));
+            eta = eta * sqrt(1 - pow(beta_2, counters[0])) / (double)(1 - pow(beta_1, counters[0]));
 
             if (holds_alternative<double>(d))
             {
@@ -199,13 +198,7 @@ void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta)
             }
 
             gradient = delta * outputs[i - 1].transpose();
-            gradient_square = (gradient.array().square()).matrix();       // ok;
-            epsilon.conservativeResize(gradient.rows(), gradient.cols()); // ok;
-
-            if (counters[i - 1] == 0)
-            {
-                epsilon.setConstant(pow(10, -8));
-            }
+            gradient_square = (gradient.array().square()).matrix();
 
             M_t[i - 1] = M_t[i - 1] * beta_1 + (1 - beta_1) * gradient;
             V_t[i - 1] = V_t[i - 1] * beta_2 + (1 - beta_2) * gradient_square;
@@ -214,46 +207,40 @@ void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta)
             V_hat = V_t[i - 1] / (1 - pow(beta_2, counters[0]));
 
             sqrt_v = (V_hat.array().sqrt()).matrix();
-            sqrt_v = sqrt_v + epsilon;
+            sqrt_v = sqrt_v.array() + epsilon;
 
             update = (M_hat.array() / sqrt_v.array()).matrix();
 
-            weights[i - 1] = weights[i - 1] + eta * update;
+            weights[i - 1] = weights[i - 1] + eta * update - lambda * weights[i - 1];
         }
 
         else
         {
-            /*  net_t = net_calculator(i);
-             func_choiser(function_strings[i - 1]);
+            net_t = net_calculator(i);
+            func_choiser(function_strings[i - 1]);
 
-             delta = weights[i].transpose() * delta;
-             //eta = eta * sqrt(1 - pow(beta_2, counters[0])) / (double)(1 - pow(beta_1, counters[0]));
+            delta = weights[i].transpose() * delta;
+            eta = eta * sqrt(1 - pow(beta_2, counters[0])) / (double)(1 - pow(beta_1, counters[0]));
 
-             for (int k = 0; k < delta.size(); k++)
-             {
-                 delta[k] = delta[k] * der_act_func(net_t[k]);
-             }
+            for (int k = 0; k < delta.size(); k++)
+            {
+                delta[k] = delta[k] * der_act_func(net_t[k]);
+            }
 
-             gradient = delta * outputs[i - 1].transpose();
-             gradient_square = (gradient.array().square()).matrix();
-             epsilon.conservativeResize(gradient.rows(), gradient.cols());
+            gradient = delta * outputs[i - 1].transpose();
+            gradient_square = (gradient.array().square()).matrix();
 
-             if (counters[0] == 0)
-             {
-                 epsilon.setConstant(pow(10, -8));
-             }
+            M_t[i - 1] = M_t[i - 1] * beta_1 + (1 - beta_1) * gradient;
+            V_t[i - 1] = V_t[i - 1] * beta_2 + (1 - beta_2) * gradient_square;
 
-             M_t[i - 1] = M_t[i - 1] * beta_1 + (1 - beta_1) * gradient;
-             V_t[i - 1] = V_t[i - 1] * beta_2 + (1 - beta_2) * gradient_square;
+            M_hat = M_t[i - 1] / (1 - pow(beta_1, counters[0]));
+            V_hat = V_t[i - 1] / (1 - pow(beta_2, counters[0]));
 
-             M_hat = M_t[i - 1] / (1 - pow(beta_1, counters[0]));
-             V_hat = V_t[i - 1] / (1 - pow(beta_2, counters[0]));
+            sqrt_v = (V_hat.array().sqrt()).matrix();
+            sqrt_v = sqrt_v.array() + epsilon;
 
-             sqrt_v = (V_hat.array().sqrt()).matrix();
-             sqrt_v = sqrt_v + epsilon;
-
-             update = (M_hat.array() / sqrt_v.array()).matrix();
-             weights[i - 1] = weights[i - 1] + eta * update;  */
+            update = (M_hat.array() / sqrt_v.array()).matrix();
+            weights[i - 1] = weights[i - 1] + eta * update - lambda * weights[i - 1];
         }
         i--;
     };

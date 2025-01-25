@@ -57,7 +57,7 @@ public:
 
     void RandomTraining(variant<double, VectorXd> d, double eta, double alpha, double lambda);  // Random training: in this case takes a double (d) since monk is a class. problem;
     void BackPropagation(variant<double, VectorXd> d, double eta, double alpha, double lambda); // BackProp. algorithm: in this case takes a double (d) since monk is a class. problem;
-    void Adam(variant<double, VectorXd> d, double eta);                                         // Adam algorithm;
+    void Adam(variant<double, VectorXd> d, double eta, double lambda);                                         // Adam algorithm;
 
 private:
     bool isLast; // Defined to access isOutputlayer's value;

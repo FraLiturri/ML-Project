@@ -115,7 +115,7 @@ def DoAnalysis(training_steps, MyGrid):
     print(len(BestParamsGrid))
 
     Inputs = [
-        [x.Eta, x.Lambda, x.Alpha, training_steps, i, str(1)]
+        [x.Eta, x.Alpha, x.Lambda, training_steps, i, str(1)]
         for i, x in enumerate(BestParamsGrid)
     ]
 
@@ -188,7 +188,7 @@ if __name__ == "__main__":
                     )
 
                     Inputs = [
-                        [x.Eta, x.Lambda, x.Alpha, Training_Steps_Default, i]
+                        [x.Eta, x.Alpha, x.Lambda, Training_Steps_Default, i]
                         for i, x in enumerate(MyGrid.Grid)
                     ]
 
@@ -275,7 +275,7 @@ if __name__ == "__main__":
                         step3,
                     )
                     Inputs = [
-                        [x.Eta, x.Lambda, x.Alpha, training_steps, i]
+                        [x.Eta, x.Alpha, x.Lambda, training_steps, i]
                         for i, x in enumerate(MyGrid.Grid)
                     ]
                     with mp.Pool(processes=CPU_Number) as pool:
@@ -316,7 +316,7 @@ if __name__ == "__main__":
                     lambdaH = float(single_lambda_entry.get())
                     alphaH = float(single_alpha_entry.get())
                     training_Steps = float(single_training_steps_entry.get())
-                    Inputs = [etaH, lambdaH, alphaH, training_Steps, 0]
+                    Inputs = [etaH, alphaH, lambdaH, training_Steps, 0]
                     if training_Steps < 0:
                         raise ValueError
                     if etaH < 0:
@@ -373,6 +373,7 @@ if __name__ == "__main__":
     # Create the main application window
     root = ctk.CTk()
     root.title("Grid Search and Single Run")
+    root.attributes("-topmost", True)
 
     # Create a tab view
     tab_view = ctk.CTkTabview(root)
