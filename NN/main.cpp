@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
             second_hidden.forward_pass("leaky_relu", 2);
             output_layer.forward_pass("linear", 3, true);
 
-            output_layer.Adam(TrainingResults[k], stod(argv[1]), stod(argv[2]));
+            output_layer.BackPropagation(TrainingResults[k], stod(argv[1]), stod(argv[2]), stod(argv[3]));
             TrainingLoss.calculator("MEE", "NN_results/training_loss.txt", outputs[weights.size()], TrainingResults[k], TrainingResults.size());
 
             outputs.clear();

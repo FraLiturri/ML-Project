@@ -25,17 +25,17 @@ Lambda_Min_Default = 0
 Lambda_Max_Default = 1e-4
 Alpha_Min_Default = 0
 Alpha_Max_Default = 0.1
-Step1_Default = 10
-Step2_Default = 10
-Step3_Default = 10
+Step1_Default = 1
+Step2_Default = 1
+Step3_Default = 2
 Training_Steps_Default = 500
 CPU_Number = os.cpu_count()
 GridSize = Step1_Default * Step2_Default * Step3_Default
 
 
 # Standard parameters for single run;
-Eta_single = 0.2
-Lambda_single = 0.0
+Eta_single = 1e-5
+Lambda_single = 1e-6
 Alpha_single = 0.0
 
 
@@ -194,7 +194,7 @@ if __name__ == "__main__":
 
                     with mp.Pool(processes=CPU_Number) as pool:
                         results = pool.map(CallMain, Inputs)
-
+                    print(Inputs)
                     DoAnalysis(Training_Steps_Default, MyGrid)
 
                     """
@@ -222,9 +222,9 @@ if __name__ == "__main__":
                     
                     Message  = f"L'indice della loss piu' bassa e' {Index} e corrisponde ad una loss di {Best_val_loss} con varianza {Best_val_std}.\n La tripletta associata e' (Eta, Alpha, Lambda) = {MyGrid.Grid[Index].Eta}, {MyGrid.Grid[Index].Alpha}, {MyGrid.Grid[Index].Lambda}"
                     print(Message)
-                    """
+                    
                     # DoAnalysis(Training_Steps_Default)
-                    """
+                    
                     eta = eta[indexes]
                     val_loss = val_loss[indexes]
 
@@ -281,6 +281,7 @@ if __name__ == "__main__":
                     with mp.Pool(processes=CPU_Number) as pool:
                         results = pool.map(CallMain, Inputs)
                     
+                    print(Inputs)
                     DoAnalysis(training_steps, MyGrid)
 
             except ValueError:
@@ -301,14 +302,16 @@ if __name__ == "__main__":
                 ):
                     Inputs = [
                         Eta_single,
-                        Lambda_single,
                         Alpha_single,
+                        Lambda_single,
+                        
                         Training_Steps_Default,
                         0,
                     ]
                     print(
                         "---% Single run %---",
                     )
+                    print(Inputs)
                     CallMain(Inputs)
 
                 else:
@@ -322,6 +325,7 @@ if __name__ == "__main__":
                     if etaH < 0:
                         raise ValueError
                     CallMain(Inputs)
+                    print(Inputs)
             except ValueError:
                 messagebox.showerror("Error", "Insert valid values.")
 
@@ -354,21 +358,6 @@ if __name__ == "__main__":
     # Set the appearance mode and theme
     ctk.set_appearance_mode("Dark")
     ctk.set_default_color_theme("blue")
-
-    # Function for the "Done" button
-    def done_action():
-        print("Done button clicked")
-
-    # Function for the "Ricompile" button
-    def recompile_action():
-        try:
-            subprocess.run(
-                ["g++", "-o", "main.exe;", "main.cpp"],
-                check=True,
-            )
-            print("Compilation successful.")
-        except subprocess.CalledProcessError as e:
-            print("Compilation failed:", e)
 
     # Create the main application window
     root = ctk.CTk()

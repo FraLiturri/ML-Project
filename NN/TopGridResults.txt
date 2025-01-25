@@ -1,160 +1,80 @@
-Grid_Cell: 0 Eta: 0.0029 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.01357
-Grid_Cell: 1 Eta: 0.0013 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.17004
-Grid_Cell: 7 Eta: 0.0023 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.985809
-Grid_Cell: 5 Eta: 0.0038 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.948204
-Grid_Cell: 2 Eta: 0.0062 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.949149
-Grid_Cell: 6 Eta: 0.0048 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.91291
-Grid_Cell: 4 Eta: 0.0049 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.854422
-Grid_Cell: 3 Eta: 0.0022 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.879649
-Grid_Cell: 3 Eta: 0.0022 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.03066
-Grid_Cell: 1 Eta: 0.0013 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.04148
-Grid_Cell: 5 Eta: 0.0038 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.946221
-Grid_Cell: 0 Eta: 0.0029 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.07272
-Grid_Cell: 6 Eta: 0.0048 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.975017
-Grid_Cell: 2 Eta: 0.0062 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.946783
-Grid_Cell: 7 Eta: 0.0023 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.786121
-Grid_Cell: 4 Eta: 0.0049 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.90221
-Grid_Cell: 7 Eta: 0.0023 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.940911
-Grid_Cell: 3 Eta: 0.0022 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.02954
-Grid_Cell: 1 Eta: 0.0013 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.03618
-Grid_Cell: 2 Eta: 0.0062 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.839109
-Grid_Cell: 6 Eta: 0.0048 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.856116
-Grid_Cell: 0 Eta: 0.0029 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.924128
-Grid_Cell: 5 Eta: 0.0038 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.975812
-Grid_Cell: 4 Eta: 0.0049 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.932831
-Grid_Cell: 4 Eta: 0.0049 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.04423
-Grid_Cell: 6 Eta: 0.0048 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.840068
-Grid_Cell: 7 Eta: 0.0023 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.889583
-Grid_Cell: 5 Eta: 0.0038 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.963318
-Grid_Cell: 2 Eta: 0.0062 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.862313
-Grid_Cell: 0 Eta: 0.0029 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.967496
-Grid_Cell: 1 Eta: 0.0013 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.11483
-Grid_Cell: 3 Eta: 0.0022 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.872871
-Grid_Cell: 1 Eta: 0.0013 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.861909
-Grid_Cell: 7 Eta: 0.0023 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.00135
-Grid_Cell: 4 Eta: 0.0049 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.931751
-Grid_Cell: 0 Eta: 0.0029 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.960617
-Grid_Cell: 2 Eta: 0.0062 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.993455
-Grid_Cell: 3 Eta: 0.0022 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.01623
-Grid_Cell: 5 Eta: 0.0038 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.917984
-Grid_Cell: 6 Eta: 0.0048 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.928357
-Grid_Cell: 1 Eta: 0.0013 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.908471
-Grid_Cell: 2 Eta: 0.0062 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.02384
-Grid_Cell: 4 Eta: 0.0049 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.873122
-Grid_Cell: 7 Eta: 0.0023 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.852963
-Grid_Cell: 6 Eta: 0.0048 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.902625
-Grid_Cell: 0 Eta: 0.0029 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.08183
-Grid_Cell: 3 Eta: 0.0022 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.939116
-Grid_Cell: 5 Eta: 0.0038 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.911556
-Grid_Cell: 7 Eta: 0.0023 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.914645
-Grid_Cell: 5 Eta: 0.0038 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.872428
-Grid_Cell: 0 Eta: 0.0029 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.88741
-Grid_Cell: 3 Eta: 0.0022 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.875099
-Grid_Cell: 2 Eta: 0.0062 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.992871
-Grid_Cell: 6 Eta: 0.0048 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.933771
-Grid_Cell: 4 Eta: 0.0049 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.878452
-Grid_Cell: 1 Eta: 0.0013 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.00304
-Grid_Cell: 0 Eta: 0.0029 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.99666
-Grid_Cell: 5 Eta: 0.0038 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.839757
-Grid_Cell: 2 Eta: 0.0062 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.06213
-Grid_Cell: 1 Eta: 0.0013 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.986238
-Grid_Cell: 3 Eta: 0.0022 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.0007
-Grid_Cell: 6 Eta: 0.0048 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.947081
-Grid_Cell: 7 Eta: 0.0023 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.746119
-Grid_Cell: 4 Eta: 0.0049 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.960426
-Grid_Cell: 7 Eta: 0.0023 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.03757
-Grid_Cell: 3 Eta: 0.0022 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.02045
-Grid_Cell: 5 Eta: 0.0038 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.904437
-Grid_Cell: 4 Eta: 0.0049 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.928889
-Grid_Cell: 1 Eta: 0.0013 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.04665
-Grid_Cell: 0 Eta: 0.0029 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.846673
-Grid_Cell: 2 Eta: 0.0062 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.01126
-Grid_Cell: 6 Eta: 0.0048 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.936073
-Grid_Cell: 1 Eta: 0.0013 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.935484
-Grid_Cell: 6 Eta: 0.0048 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.886314
-Grid_Cell: 4 Eta: 0.0049 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.969832
-Grid_Cell: 2 Eta: 0.0062 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.02522
-Grid_Cell: 0 Eta: 0.0029 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.09636
-Grid_Cell: 5 Eta: 0.0038 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.11906
-Grid_Cell: 3 Eta: 0.0022 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.976204
-Grid_Cell: 7 Eta: 0.0023 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.944601
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
-Grid_Cell: 
+Grid_Cell: 7 Eta: 6.4e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.794879
+Grid_Cell: 1 Eta: 8.2e-05 Alpha: 4e-05 Lambda: 0.0 Validation loss: 0.724857
+Grid_Cell: 4 Eta: 8.2e-05 Alpha: 8e-05 Lambda: 0.0 Validation loss: 0.700914
+Grid_Cell: 6 Eta: 6.4e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.850008
+Grid_Cell: 2 Eta: 8.2e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.802218
+Grid_Cell: 0 Eta: 8.2e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.769247
+Grid_Cell: 5 Eta: 6.4e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.861483
+Grid_Cell: 3 Eta: 8.2e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.734351
+Grid_Cell: 7 Eta: 6.4e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.845172
+Grid_Cell: 2 Eta: 8.2e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.90874
+Grid_Cell: 3 Eta: 8.2e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.753709
+Grid_Cell: 4 Eta: 8.2e-05 Alpha: 8e-05 Lambda: 0.0 Validation loss: 0.730792
+Grid_Cell: 1 Eta: 8.2e-05 Alpha: 4e-05 Lambda: 0.0 Validation loss: 0.735944
+Grid_Cell: 5 Eta: 6.4e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.853165
+Grid_Cell: 0 Eta: 8.2e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.741005
+Grid_Cell: 6 Eta: 6.4e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.801786
+Grid_Cell: 5 Eta: 6.4e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.84974
+Grid_Cell: 6 Eta: 6.4e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.890269
+Grid_Cell: 3 Eta: 8.2e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.82063
+Grid_Cell: 7 Eta: 6.4e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.856247
+Grid_Cell: 4 Eta: 8.2e-05 Alpha: 8e-05 Lambda: 0.0 Validation loss: 0.722976
+Grid_Cell: 0 Eta: 8.2e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.703936
+Grid_Cell: 1 Eta: 8.2e-05 Alpha: 4e-05 Lambda: 0.0 Validation loss: 0.768934
+Grid_Cell: 2 Eta: 8.2e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.739946
+Grid_Cell: 3 Eta: 8.2e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.775947
+Grid_Cell: 7 Eta: 6.4e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.941483
+Grid_Cell: 0 Eta: 8.2e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.775343
+Grid_Cell: 6 Eta: 6.4e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.81578
+Grid_Cell: 1 Eta: 8.2e-05 Alpha: 4e-05 Lambda: 0.0 Validation loss: 0.840721
+Grid_Cell: 2 Eta: 8.2e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.795893
+Grid_Cell: 4 Eta: 8.2e-05 Alpha: 8e-05 Lambda: 0.0 Validation loss: 0.761924
+Grid_Cell: 5 Eta: 6.4e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.885324
+Grid_Cell: 1 Eta: 8.2e-05 Alpha: 4e-05 Lambda: 0.0 Validation loss: 0.751361
+Grid_Cell: 4 Eta: 8.2e-05 Alpha: 8e-05 Lambda: 0.0 Validation loss: 0.843674
+Grid_Cell: 5 Eta: 6.4e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.892661
+Grid_Cell: 3 Eta: 8.2e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.705353
+Grid_Cell: 2 Eta: 8.2e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.734597
+Grid_Cell: 6 Eta: 6.4e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.933901
+Grid_Cell: 0 Eta: 8.2e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.764765
+Grid_Cell: 7 Eta: 6.4e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.838503
+Grid_Cell: 0 Eta: 8.2e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.821386
+Grid_Cell: 3 Eta: 8.2e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.800644
+Grid_Cell: 7 Eta: 6.4e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.03248
+Grid_Cell: 2 Eta: 8.2e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.791721
+Grid_Cell: 4 Eta: 8.2e-05 Alpha: 8e-05 Lambda: 0.0 Validation loss: 0.765453
+Grid_Cell: 6 Eta: 6.4e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.914428
+Grid_Cell: 1 Eta: 8.2e-05 Alpha: 4e-05 Lambda: 0.0 Validation loss: 0.736403
+Grid_Cell: 5 Eta: 6.4e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.837415
+Grid_Cell: 1 Eta: 8.2e-05 Alpha: 4e-05 Lambda: 0.0 Validation loss: 0.796526
+Grid_Cell: 3 Eta: 8.2e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 1.05896
+Grid_Cell: 7 Eta: 6.4e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.989706
+Grid_Cell: 4 Eta: 8.2e-05 Alpha: 8e-05 Lambda: 0.0 Validation loss: 0.776168
+Grid_Cell: 5 Eta: 6.4e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.796428
+Grid_Cell: 0 Eta: 8.2e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.80908
+Grid_Cell: 2 Eta: 8.2e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.81779
+Grid_Cell: 6 Eta: 6.4e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.977039
+Grid_Cell: 7 Eta: 6.4e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.890977
+Grid_Cell: 0 Eta: 8.2e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.802858
+Grid_Cell: 2 Eta: 8.2e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.760918
+Grid_Cell: 1 Eta: 8.2e-05 Alpha: 4e-05 Lambda: 0.0 Validation loss: 0.802201
+Grid_Cell: 3 Eta: 8.2e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.78365
+Grid_Cell: 4 Eta: 8.2e-05 Alpha: 8e-05 Lambda: 0.0 Validation loss: 0.757335
+Grid_Cell: 6 Eta: 6.4e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.854728
+Grid_Cell: 5 Eta: 6.4e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.767821
+Grid_Cell: 4 Eta: 8.2e-05 Alpha: 8e-05 Lambda: 0.0 Validation loss: 0.759022
+Grid_Cell: 5 Eta: 6.4e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.923172
+Grid_Cell: 6 Eta: 6.4e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.952336
+Grid_Cell: 0 Eta: 8.2e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.802074
+Grid_Cell: 3 Eta: 8.2e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.781245
+Grid_Cell: 2 Eta: 8.2e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.815799
+Grid_Cell: 7 Eta: 6.4e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.920293
+Grid_Cell: 1 Eta: 8.2e-05 Alpha: 4e-05 Lambda: 0.0 Validation loss: 0.75271
+Grid_Cell: 4 Eta: 8.2e-05 Alpha: 8e-05 Lambda: 0.0 Validation loss: 0.699308
+Grid_Cell: 1 Eta: 8.2e-05 Alpha: 4e-05 Lambda: 0.0 Validation loss: 0.757117
+Grid_Cell: 6 Eta: 6.4e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.901579
+Grid_Cell: 5 Eta: 6.4e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.887739
+Grid_Cell: 2 Eta: 8.2e-05 Alpha: 6.000000000000001e-05 Lambda: 0.0 Validation loss: 0.785348
+Grid_Cell: 0 Eta: 8.2e-05 Alpha: 2e-05 Lambda: 0.0 Validation loss: 0.83525
+Grid_Cell: 7 Eta: 6.4e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.973415
+Grid_Cell: 3 Eta: 8.2e-05 Alpha: 0.0 Lambda: 0.0 Validation loss: 0.735687

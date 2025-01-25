@@ -6,6 +6,7 @@
 #include "activation_functions.hpp"
 #include "eigen_path.hpp"
 
+#include <variant>
 #include <any>
 #include <iostream>
 #include <vector>
@@ -161,7 +162,7 @@ void Hidden_Layer::RandomTraining(variant<double, VectorXd> d, double eta, doubl
     next_inputs.clear();
     units_output.setZero();
 }
-void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta, double lambda = 0)
+void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta, double alpha = 0, double lambda = 0)
 {
     i = weights.size();
 
