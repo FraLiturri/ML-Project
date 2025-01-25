@@ -6,7 +6,6 @@
 #include "data_reader.hpp"
 #include "loss.hpp"
 #include "validation.hpp"
-#include "estimator.hpp"
 #include "eigen_path.hpp"
 #include "safe_writer.hpp"
 

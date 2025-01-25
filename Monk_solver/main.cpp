@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     ofstream("NN_results/test_loss.txt", std::ios::trunc).close();
 
     //! Demiurge blows;
-    Demiurge NeuralNetwork(17, {10}, 1);   // Input units - hidden_units vector - output units;
+    Demiurge NeuralNetwork(17, {4}, 1);   // Input units - hidden_units vector - output units;
     Demiurge *pointerNN = &NeuralNetwork; // Pointer to NeuralNetwork for print_info, avoidable if not desired;
 
     //! Preparing data for training (and validation) and test phase;
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
         for (int k = 0; k < TrainingData.size(); k++)
         {
             input_layer.forward_pass(TrainingData[k]);
-            first_hidden.forward_pass("elu", 1);
+            first_hidden.forward_pass("relu", 1);
             output_layer.forward_pass("sigmoid", 2, true);
 
             output_layer.BackPropagation(TrainingResults[k], stod(argv[1]), stod(argv[2]), stod(argv[3]));
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
         for (int k = 0; k < ValidationData.size(); k++)
         {
             input_layer.forward_pass(ValidationData[k]);
-            first_hidden.forward_pass("elu", 1);
+            first_hidden.forward_pass("relu", 1);
             output_layer.forward_pass("sigmoid", 2, true);
 
             ValidationLoss.calculator("MSE", "NN_results/val_loss.txt", outputs[weights.size()][0], ValidationResults[k], ValidationResults.size());
@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     for (int k = 0; k < TestData.size(); k++)
     {
         input_layer.forward_pass(TestData[k]);
-        first_hidden.forward_pass("elu", 1);
+        first_hidden.forward_pass("relu", 1);
         output_layer.forward_pass("sigmoid", 2, true);
 
         outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;

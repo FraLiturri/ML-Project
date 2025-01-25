@@ -48,7 +48,7 @@ void Hidden_Layer::BackPropagation(variant<double, VectorXd> d, double eta, doub
                 delta_k = (get<double>(d) - outputs[i][0]) * der_act_func(net_t[0]);
                 delta[0] = delta_k;
             }
-            
+
             else if (holds_alternative<VectorXd>(d))
             {
                 for (int k = 0; k < get<VectorXd>(d).size(); k++)
@@ -82,6 +82,7 @@ void Hidden_Layer::BackPropagation(variant<double, VectorXd> d, double eta, doub
         {
             net_t = net_calculator(i);
             delta = weights[i].transpose() * delta;
+            func_choiser(function_strings[i - 1]);
 
             for (int k = 0; k < delta.size(); k++)
             {
@@ -98,7 +99,7 @@ void Hidden_Layer::BackPropagation(variant<double, VectorXd> d, double eta, doub
             }
 
             weights[i - 1] = weights[i - 1] + update;
-            
+
             prev_updates[i - 1] = update;
             storer.push_back(delta);
         }
@@ -142,7 +143,6 @@ void Hidden_Layer::RandomTraining(variant<double, VectorXd> d, double eta, doubl
 
     update = delta * outputs[i - 1].transpose();
     weights[i - 1] = weights[i - 1] + eta * update;
-
 }
 
 #endif
