@@ -5,6 +5,14 @@ from matplotlib import pyplot as plt
 import sys
 from decimal import Decimal, ROUND_DOWN
 
+plt.rc("axes", titlesize=14)  # Dimensione titolo degli assi
+plt.rc("axes", labelsize=14)  # Dimensione etichette degli assi
+plt.rc("xtick", labelsize=14)  # Dimensione etichette tick sull'asse X
+plt.rc("ytick", labelsize=14)  # Dimensione etichette tick sull'asse Y
+plt.rc("legend", fontsize=14)  # Dimensione legenda
+plt.rc("font", size=14)  # Dimensione generale del font
+
+
 def run_exe(file_path, n):
     for i in range(n):
         try:
@@ -22,7 +30,7 @@ if str(sys.argv[1]) == "plot":
     val_loss_path = "NN_results/val_loss.txt"
     test_loss_path = "NN_results/test_loss.txt"
 
-    with open(test_loss_path, 'r') as file:
+    with open(test_loss_path, "r") as file:
         test_loss = file.readline().strip()
 
     val_loss = np.loadtxt(val_loss_path)
@@ -41,10 +49,9 @@ if str(sys.argv[1]) == "plot":
     plt.grid(ls="dashed", axis="both")
     plt.xlabel("Epochs")
     plt.ylabel("Loss")
-    plt.title("Training loss")
-    plt.savefig("NN_results/loss_plot.pdf")
+    plt.title("Training and validation loss")
     plt.legend(loc="best")
-
+    plt.savefig("NN_results/no_nest.pdf")
     plt.show()
 
 
@@ -53,9 +60,7 @@ elif str(sys.argv[1]) == "loss_mean":
     loss = np.loadtxt(filepath)
     mean_loss = loss.mean()
     std_loss = loss.std()
-    print(
-        f"\nMean loss is: {mean_loss} +/- {std_loss}.\n"
-    )
+    print(f"\nMean loss is: {mean_loss} +/- {std_loss}.\n")
 
 elif str(sys.argv[1]) == "iterate":
     exe_path = sys.argv[2]

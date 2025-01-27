@@ -4,6 +4,7 @@
 #include "lib.hpp"
 #include <iomanip>
 #include <variant>
+#include <cmath>
 #include "eigen_path.hpp"
 
 using namespace std;
@@ -101,6 +102,7 @@ public:
             if (outFile.is_open())
             {
                 outFile << fixed << setprecision(15);
+                isnan(loss_value) ? loss_value = 100 : 0;
                 outFile << loss_value << endl;
                 outFile.close();
             }

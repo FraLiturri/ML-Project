@@ -49,7 +49,7 @@ def CallMain(Inputs):
         str(Inputs[4]),
     ]
     result = subprocess.run(command, capture_output=True, text=True)
-    print(result.stdout)
+    #print(result.stdout)
 
 
 def CallMainForValidation(Inputs):
@@ -63,7 +63,7 @@ def CallMainForValidation(Inputs):
         str(Inputs[5]),
     ]
     result = subprocess.run(command, capture_output=True, text=True)
-    print(result.stdout)
+    #print(result.stdout)
 
 
 def Compile():
@@ -120,13 +120,13 @@ def DoAnalysis(training_steps, MyGrid):
     ]
 
     final_val_loss = np.array([])
-    for i in range(10):
+    for i in range(8):
         with mp.Pool(processes=CPU_Number) as pool:
             results = pool.map(CallMainForValidation, Inputs)
             grid_cell_number = np.loadtxt("TopGridResults.txt", usecols=1)[
                 i * len(BestParamsGrid) : (i + 1) * len(BestParamsGrid)
             ]
-            print(grid_cell_number)
+            #print(grid_cell_number)
             val_loss = np.loadtxt("TopGridResults.txt", usecols=10)[
                 i * len(BestParamsGrid) : (i + 1) * len(BestParamsGrid)
             ]
@@ -135,10 +135,10 @@ def DoAnalysis(training_steps, MyGrid):
             final_val_loss = np.append(final_val_loss, val_loss)
 
     final_val_loss = final_val_loss.reshape(-1, len(BestParamsGrid)).T
-    print(final_val_loss)
+    #print(final_val_loss)
     # ok, ora e' tutto ordinato in ordine crescente: a dieci a dieci faccio la media....
     val_mean = np.mean(final_val_loss, axis=1)
-    print(val_mean)
+    #print(val_mean)
     val_std = np.std(final_val_loss, axis=1)
     Index = np.argmin(val_mean)
     Best_val_loss = val_mean[Index]
@@ -194,7 +194,7 @@ if __name__ == "__main__":
 
                     with mp.Pool(processes=CPU_Number) as pool:
                         results = pool.map(CallMain, Inputs)
-                    print(Inputs)
+                    #print(Inputs)
                     DoAnalysis(Training_Steps_Default, MyGrid)
 
                     """
@@ -281,7 +281,7 @@ if __name__ == "__main__":
                     with mp.Pool(processes=CPU_Number) as pool:
                         results = pool.map(CallMain, Inputs)
                     
-                    print(Inputs)
+                    #print(Inputs)
                     DoAnalysis(training_steps, MyGrid)
 
             except ValueError:
@@ -311,7 +311,7 @@ if __name__ == "__main__":
                     print(
                         "---% Single run %---",
                     )
-                    print(Inputs)
+                    #print(Inputs)
                     CallMain(Inputs)
 
                 else:
@@ -325,7 +325,7 @@ if __name__ == "__main__":
                     if etaH < 0:
                         raise ValueError
                     CallMain(Inputs)
-                    print(Inputs)
+                    #print(Inputs)
             except ValueError:
                 messagebox.showerror("Error", "Insert valid values.")
 

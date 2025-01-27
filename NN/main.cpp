@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     ofstream("NN_results/test_loss.txt", std::ios::trunc).close();
 
     //! Demiurge blows;
-    Demiurge NeuralNetwork(12, {25, 20}, 3); // Input units - hidden_units vector - output units;
+    Demiurge NeuralNetwork(12, {10, 10}, 3); // Input units - hidden_units vector - output units;
     Demiurge *pointerNN = &NeuralNetwork;    // Pointer to NeuralNetwork for print_info, avoidable if not desired;
 
     //! Preparing data;
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     Validator.HoldOut(TrainingData, TrainingResults, ValidationData, ValidationResults, TestData, TestResults, 190, 220);
 
     //! Printing NN general info: can be avoided if not desired;
-    print_info(pointerNN);
+    // print_info(pointerNN);
 
     //! Neural network construction;
     Input_Layer input_layer;
@@ -95,8 +95,7 @@ int main(int argc, char *argv[])
     //! Counter stops and prints elapsed time;
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> elapsed_time = end - start;
-    cout << "Elapsed time: " << elapsed_time.count() << " seconds. \n"
-         << endl;
+    // cout << "Elapsed time: " << elapsed_time.count() << " seconds. \n" << endl;
 
     //! Writing data safely during parallel grid search;
     std::string NameOfOutputFile;

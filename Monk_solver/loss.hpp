@@ -17,6 +17,8 @@ double MSE(double x, double y)
 }
 double BCE(double x, double y)
 {
+    // x is NN output, y is target 
+    aux = -(y*log(x) + (1-y)*log(1-x));
     return aux;
 }
 
