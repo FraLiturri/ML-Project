@@ -31,8 +31,8 @@ def run_exe(file_path, n):
 
 
 def plot():
-    training_loss_path = "Monk_solver/NN_results/training_loss.txt"
-    val_loss_path = "Monk_solver/NN_results/val_loss.txt"
+    training_loss_path = "NN_results/training_loss.txt"
+    val_loss_path = "NN_results/val_loss.txt"
 
     tr_loss = np.loadtxt(training_loss_path)
     val_loss = np.loadtxt(val_loss_path)
@@ -40,31 +40,12 @@ def plot():
     x_val = np.linspace(1, len(val_loss), len(val_loss))
 
     plt.errorbar(x_tr, tr_loss, fmt="--", label="Training loss")
-    plt.errorbar(x_val, val_loss, fmt ="--", label = "Validation loss")
+    # plt.errorbar(x_val, val_loss, fmt ="--", label = "Validation loss")
     plt.grid(ls="dashed", axis="both")
     plt.xlabel("Epochs")
     plt.ylabel("Loss")
     plt.title("Training loss")
-    plt.savefig("Monk_solver/NN_results/loss_plot.pdf")
-    plt.legend(loc="best")
-    plt.show()
-
-
-def plot_accuracy():
-    test_accuracy_path = "Monk_solver/NN_results/test_accuracy.txt"
-    tr_accuracy_path = "Monk_solver/NN_results/tr_accuracy.txt"
-
-    test_acc = np.loadtxt(test_accuracy_path)
-    tr_acc = np.loadtxt(tr_accuracy_path)
-    x_acc = np.linspace(1, len(test_acc), len(test_acc))
-    x_tr_acc = np.linspace(1, len(tr_acc), len(tr_acc))
-    plt.errorbar(x_tr_acc, tr_acc, fmt ="--", label = "Training accuracy")
-    plt.errorbar(x_acc, test_acc, fmt="--", label="Test accuracy")
-    plt.grid(ls="dashed", axis="both")
-    plt.xlabel("Epochs")
-    plt.ylabel("Accuracy")
-    plt.title("Test accuracy")
-    plt.savefig("Monk_solver/NN_results/accuracy_plot.pdf")
+    plt.savefig("NN_results/loss_plot.pdf")
     plt.legend(loc="best")
     plt.show()
 

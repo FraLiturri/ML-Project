@@ -8,10 +8,10 @@
 using namespace std;
 using namespace Eigen;
 
-class DataReader
+class DataReader // This class read data form file, creating two vectors. Class methods are used according to the type of data that will be read; output is a VectorXd? or a double?
 {
 public:
-    void VecAndDouble(const string fileinput, VectorXd &resultsVector, vector<VectorXd> &Inputs) //, double splitting_index = 124)
+    void VecAndDouble(const string fileinput, VectorXd &resultsVector, vector<VectorXd> &Inputs)
     {
         string line; // declaring the std::string that will act as a placeholder for each line of the file;
         ifstream myfile_in(fileinput);
@@ -86,7 +86,7 @@ public:
             }
         }
     }
-    
+
     void VecAndVec_Blind(const string fileinput, vector<VectorXd> &Inputs)
     {
         string line; // declaring the std::string that will act as a placeholder for each line of the file;

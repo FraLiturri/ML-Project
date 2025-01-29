@@ -8,7 +8,7 @@
 using namespace std;
 using namespace Eigen;
 
-class Validation
+class Validation // This class was build to break at a certain index, data written by file txt, dividing them in TrainingData, VL and TS;
 {
 public:
     void HoldOut(vector<VectorXd> &Inputs, VectorXd &resultsVector, vector<VectorXd> &val_data, VectorXd &val_res, vector<VectorXd> &test_data, VectorXd &test_res, int val_size, int test_size)
@@ -33,9 +33,6 @@ public:
 
         test_data = test_data_aux;
         test_res = test_res_aux;
-
-        
-
     }
 };
 

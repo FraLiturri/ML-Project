@@ -21,7 +21,7 @@ VectorXd units_output, bias; // auxiliar vector;
 int first_units, last_units;
 
 //! Demiurge class: the Creator;
-class Demiurge
+class Demiurge // This class initializes weights (and aux) matrices, storing them in a vector.
 {
 public:
     int in_units, out_units, hidden_layers, rows, cols;
@@ -47,18 +47,18 @@ public:
             i == hidden_layers + 1 ? rows = out_units : rows = hidden_and_out_units[i]; // Paying attention to last layer (output);
 
             MatrixXd weight = MatrixXd::NullaryExpr(rows, cols, []()
-                                                    { return Eigen::internal::random<double>(-0.1, 0.1); });
+                                                    { return Eigen::internal::random<double>(-0.1, 0.1); }); // weight matrix;
             MatrixXd ghost = MatrixXd::NullaryExpr(rows, cols, []()
-                                                   { return Eigen::internal::random<double>(0, 0); });
+                                                   { return Eigen::internal::random<double>(0, 0); }); // for Nesterov;
             MatrixXd m_aux = MatrixXd::NullaryExpr(rows, cols, []()
-                                                   { return Eigen::internal::random<double>(0, 0); });
+                                                   { return Eigen::internal::random<double>(0, 0); }); // for Adam training;
             MatrixXd v_aux = MatrixXd::NullaryExpr(rows, cols, []()
-                                                   { return Eigen::internal::random<double>(0, 0); });
+                                                   { return Eigen::internal::random<double>(0, 0); }); // for Adam training;
 
             bias.conservativeResize(rows);
             bias.setConstant(1);
 
-            if (i != hidden_layers + 1)
+            if (i != hidden_layers + 1) // storing;
             {
                 weights.push_back(weight);
                 prev_updates.push_back(ghost);

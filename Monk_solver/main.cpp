@@ -26,15 +26,16 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
 
     ofstream("NN_results/training_loss.txt", std::ios::trunc).close();
     ofstream("NN_results/val_loss.txt", std::ios::trunc).close();
-    ofstream("NN_results/test_loss.txt", std::ios::trunc).close();
+    ofstream("NN_results/test_accuracy.txt", std::ios::trunc).close();
+    ofstream("NN_results/tr_accuracy.txt", std::ios::trunc).close();
 
     //! Demiurge blows;
     Demiurge NeuralNetwork(17, {4}, 1);   // Input units - hidden_units vector - output units;
     Demiurge *pointerNN = &NeuralNetwork; // Pointer to NeuralNetwork for print_info, avoidable if not desired;
 
-    //! Preparing data for training (and validation) and test phase;
-    DataGetter("Monk_data/monks-2binary.train", TrainingData, TrainingResults);
-    DataGetter("Monk_data/monks-2binary.test", TestData, TestResults);
+    //! Reading data;
+    DataGetter("Monk_data/monks-3binary.train", TrainingData, TrainingResults);
+    DataGetter("Monk_data/monks-3binary.test", TestData, TestResults);
 
     //! Splitting data for validation part;
     Validation Validator;
@@ -53,20 +54,19 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
     //! Output computing and training algorithm;
     for (int n = 0; n < atoi(argv[4]); n++)
     {
+        training_accuracy = 0;
+        validation_accuracy = 0;
         for (int k = 0; k < TrainingData.size(); k++)
         {
             input_layer.forward_pass(TrainingData[k]);
-            first_hidden.forward_pass("relu", 1);
+            first_hidden.forward_pass("sigmoid", 1);
             output_layer.forward_pass("sigmoid", 2, true);
 
             output_layer.BackPropagation(TrainingResults[k], stod(argv[1]), stod(argv[2]), stod(argv[3]));
             TrainingLoss.calculator("MSE", "NN_results/training_loss.txt", outputs[weights.size()][0], TrainingResults[k], TrainingResults.size());
 
-            if (n == atoi(argv[4]) - 1) // Accuracy calculator;
-            {
-                outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
-                FinalResult == TrainingResults[k] ? training_accuracy++ : 0;
-            }
+            outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
+            FinalResult == TrainingResults[k] ? training_accuracy++ : 0;
 
             outputs.clear();
             next_inputs.clear();
@@ -74,53 +74,66 @@ int main(int argc, char *argv[]) // Add int argc, char *argv[] in parenthesis;
             storer.clear();
         };
 
-        //! Validation;
+        ofstream outFile("NN_results/tr_accuracy.txt", std::ios::app);
+        if (outFile.is_open())
+        {
+            outFile << training_accuracy / (double)TrainingData.size() << endl;
+            outFile.close();
+        }
+        else
+        {
+            cerr << "Impossible to open file." << "NN_results/tr_accuracy.txt" << endl;
+        }
+
+        //! Internal Test;
         for (int k = 0; k < ValidationData.size(); k++)
         {
             input_layer.forward_pass(ValidationData[k]);
-            first_hidden.forward_pass("relu", 1);
+            first_hidden.forward_pass("sigmoid", 1);
             output_layer.forward_pass("sigmoid", 2, true);
 
+            outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
+            FinalResult == ValidationResults[k] ? validation_accuracy++ : 0;
+
             ValidationLoss.calculator("MSE", "NN_results/val_loss.txt", outputs[weights.size()][0], ValidationResults[k], ValidationResults.size());
-
-            if (n == atoi(argv[4]) - 1) // Accuracy calculator;
-            {
-                outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
-                FinalResult == ValidationResults[k] ? validation_accuracy++ : 0;
-
-                if (FinalResult == TestResults[k])
-                {
-                    FinalResult == 1 ? TP++ : TN++;
-                }
-                else
-                {
-                    FinalResult == 1 ? FP++ : FN++;
-                }
-            }
-
             outputs.clear();
             next_inputs.clear();
             function_strings.clear();
             storer.clear();
         }
+
+        ofstream out_accuracy("NN_results/test_accuracy.txt", std::ios::app);
+        if (out_accuracy.is_open())
+        {
+            out_accuracy << validation_accuracy / (double)ValidationData.size() << endl;
+            out_accuracy.close();
+        }
+        else
+        {
+            cerr << "Impossible to open file." << "NN_results/test_accuracy.txt" << endl;
+        }
     }
 
-    //! Test;
+    //! Test
     for (int k = 0; k < TestData.size(); k++)
     {
         input_layer.forward_pass(TestData[k]);
-        first_hidden.forward_pass("relu", 1);
+        first_hidden.forward_pass("sigmoid", 1);
         output_layer.forward_pass("sigmoid", 2, true);
 
         outputs[weights.size()][0] >= 0.5 ? FinalResult = 1 : FinalResult = 0;
         FinalResult == TestResults[k] ? test_accuracy++ : 0;
 
         TestLoss.calculator("MSE", "NN_results/test_loss.txt", outputs[weights.size()][0], TestResults[k], TestResults.size());
+
+        outputs.clear();
+        next_inputs.clear();
+        function_strings.clear();
+        storer.clear();
     }
 
-    // cout << "Eta: " << stod(argv[1]) << "\nAlpha: " << stod(argv[2]) << "\nLambda: " << stod(argv[3]) << endl << endl;
-    //  cout << "Validation accuracy: " << validation_accuracy / (double)ValidationData.size() * 100 << "% (" << validation_accuracy << "/" << (double)ValidationData.size() << ")" << endl;
-    //  cout << "Val loss is: " << ValidationLoss.last_loss << endl;
+    cout << "Training accuracy: " << training_accuracy / (double)TrainingData.size() * 100 << "%" << endl;
+    cout << "Training loss: " << TrainingLoss.last_loss << endl;
     cout << "Test accuracy: " << test_accuracy / (double)TestData.size() * 100 << "% (" << test_accuracy << "/" << TestData.size() << ")" << endl;
     cout << "Test loss is: " << TestLoss.last_loss << endl;
 

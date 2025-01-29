@@ -7,7 +7,7 @@
 using namespace std;
 double leaky_coeff = 0.1;
 
-// Defining activation functions and their derivatives (needed for Backpropagation);
+// Defining activation functions and their derivatives (needed for training);
 double sigmoid(double x)
 {
     return 1 / (double)(1 + exp(-x)); // Is "a" needed? (e^-ax);

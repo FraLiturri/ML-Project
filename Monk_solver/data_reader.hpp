@@ -10,7 +10,7 @@
 using namespace std;
 using namespace Eigen;
 
-void DataGetter(const string fileinput, vector<VectorXd> &Inputs, VectorXd &resultsVector) //, double splitting_index = 124)
+void DataGetter(const string fileinput, vector<VectorXd> &Inputs, VectorXd &resultsVector) // Data reader for TR, VL, TS;
 {
     string line; // declaring the std::string that will act as a placeholder for each line of the file;
     ifstream myfile_in(fileinput);

@@ -41,6 +41,9 @@ def main():
 
     elif str(sys.argv[1]) == "plot":
         analyzer.plot()
+    
+    elif str(sys.argv[1]) == "accuracy":
+        analyzer.plot_accuracy()
 
     else:  # Passed parameter;
         parametro = int(sys.argv[1])

@@ -21,10 +21,10 @@ class Input_Layer
 public:
     void forward_pass(VectorXd input)
     {
-        units_output = weights[0] * input;
-        units_output = units_output + biases[0];
+        units_output = weights[0] * input;       // Calculating outputs;
+        units_output = units_output + biases[0]; // Adding bias term;
 
-        outputs.insert(outputs.begin(), input);
+        outputs.insert(outputs.begin(), input); // Storing;
         next_inputs.insert(next_inputs.begin(), units_output);
     };
 };
@@ -39,7 +39,7 @@ public:
         function_strings.push_back(choosen_function);
 
         isLast = isOutputLayer;
-        inputs = next_inputs[depth - 1]; //! Has to be checked;
+        inputs = next_inputs[depth - 1];
 
         for (int k = 0; k < inputs.size(); k++)
         {
@@ -50,8 +50,8 @@ public:
 
         if (!isLast)
         {
-            units_output = weights[depth] * inputs; // Calculating outputs vector;
-            units_output = units_output + biases[depth]; //Adding bias term; 
+            units_output = weights[depth] * inputs;      // Calculating outputs vector;
+            units_output = units_output + biases[depth]; // Adding bias term;
 
             next_inputs.insert(next_inputs.begin() + depth, units_output); // Storing outputs;
         }

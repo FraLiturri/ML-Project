@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     ofstream("NN_results/test_loss.txt", std::ios::trunc).close();
 
     //! Demiurge blows;
-    Demiurge NeuralNetwork(12, {10, 10}, 3); // Input units - hidden_units vector - output units;
+    Demiurge NeuralNetwork(12, {10, 20}, 3); // Input units - hidden_units vector - output units;
     Demiurge *pointerNN = &NeuralNetwork;    // Pointer to NeuralNetwork for print_info, avoidable if not desired;
 
     //! Preparing data;
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     Validator.HoldOut(TrainingData, TrainingResults, ValidationData, ValidationResults, TestData, TestResults, 190, 220);
 
     //! Printing NN general info: can be avoided if not desired;
-    // print_info(pointerNN);
+    print_info(pointerNN);
 
     //! Neural network construction;
     Input_Layer input_layer;
@@ -52,11 +52,11 @@ int main(int argc, char *argv[])
         for (int k = 0; k < TrainingData.size(); k++)
         {
             input_layer.forward_pass(TrainingData[k]);
-            first_hidden.forward_pass("leaky_relu", 1);
-            second_hidden.forward_pass("leaky_relu", 2);
+            first_hidden.forward_pass("elu", 1);
+            second_hidden.forward_pass("elu", 2);
             output_layer.forward_pass("linear", 3, true);
 
-            output_layer.BackPropagation(TrainingResults[k], stod(argv[1]), stod(argv[2]), stod(argv[3]));
+            output_layer.Adam(TrainingResults[k], stod(argv[1]), stod(argv[2]), stod(argv[3]));
             TrainingLoss.calculator("MEE", "NN_results/training_loss.txt", outputs[weights.size()], TrainingResults[k], TrainingResults.size());
 
             outputs.clear();
@@ -68,8 +68,8 @@ int main(int argc, char *argv[])
         for (int k = 0; k < ValidationData.size(); k++)
         {
             input_layer.forward_pass(ValidationData[k]);
-            first_hidden.forward_pass("leaky_relu", 1);
-            second_hidden.forward_pass("leaky_relu", 2);
+            first_hidden.forward_pass("elu", 1);
+            second_hidden.forward_pass("elu", 2);
             output_layer.forward_pass("linear", 3, true);
 
             ValidationLoss.calculator("MEE", "NN_results/val_loss.txt", outputs[weights.size()], ValidationResults[k], ValidationResults.size());
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
     }
 
     //! Test;
-    /* for (int k = 0; k < TestData.size(); k++)
+    for (int k = 0; k < TestData.size(); k++)
     {
         input_layer.forward_pass(TestData[k]);
         first_hidden.forward_pass("leaky_relu", 1);
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
         TestLoss.calculator("MEE", "NN_results/test_loss.txt", outputs[weights.size()], TestResults[k], TestResults.size());
         outputs.clear();
-    } */
+    }
 
     //! Counter stops and prints elapsed time;
     auto end = chrono::high_resolution_clock::now();

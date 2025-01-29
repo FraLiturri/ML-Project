@@ -198,21 +198,21 @@ void Hidden_Layer::Adam(variant<double, VectorXd> d, double eta, double alpha = 
                 throw runtime_error("Backpropagation accepts only double or VectorXd as first input.");
             }
 
-            gradient = delta * outputs[i - 1].transpose();
-            gradient_square = (gradient.array().square()).matrix();
+            gradient = delta * outputs[i - 1].transpose(); //calculating gradient with BP formula. 
+            gradient_square = (gradient.array().square()).matrix(); //elementwise square; 
 
-            M_t[i - 1] = M_t[i - 1] * beta_1 + (1 - beta_1) * gradient;
+            M_t[i - 1] = M_t[i - 1] * beta_1 + (1 - beta_1) * gradient; //Defining Adam's factors; 
             V_t[i - 1] = V_t[i - 1] * beta_2 + (1 - beta_2) * gradient_square;
 
-            M_hat = M_t[i - 1] / (1 - pow(beta_1, counters[0]));
+            M_hat = M_t[i - 1] / (1 - pow(beta_1, counters[0])); //Renormalization; 
             V_hat = V_t[i - 1] / (1 - pow(beta_2, counters[0]));
 
-            sqrt_v = (V_hat.array().sqrt()).matrix();
+            sqrt_v = (V_hat.array().sqrt()).matrix(); //Elementwise sqrt; 
             sqrt_v = sqrt_v.array() + epsilon;
 
-            update = (M_hat.array() / sqrt_v.array()).matrix();
+            update = (M_hat.array() / sqrt_v.array()).matrix(); //calculating update to the weight; 
 
-            weights[i - 1] = weights[i - 1] + eta * update - lambda * weights[i - 1];
+            weights[i - 1] = weights[i - 1] + eta * update - lambda * weights[i - 1]; //L2 reg. added; 
         }
 
         else

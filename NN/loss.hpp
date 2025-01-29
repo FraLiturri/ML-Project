@@ -14,6 +14,7 @@ double aux;
 int counter = 0;
 VectorXd aux_vec;
 
+//Here follows some loss functions
 double MSE(variant<double, VectorXd> x, variant<double, VectorXd> y)
 {
     if (holds_alternative<VectorXd>(x))
@@ -76,7 +77,7 @@ public:
     void calculator(string loss_function, string filepath, variant<double, VectorXd> NN_outputs, variant<double, VectorXd> targets, int data_size)
     {
         counter == 0 ? loss_value = 0 : 1;
-        if (loss_function == "MSE")
+        if (loss_function == "MSE") //setting loss function according to the chosen one;  
         {
             choice = MSE;
             loss_value += choice(NN_outputs, targets) / (double)data_size;
@@ -102,7 +103,7 @@ public:
             if (outFile.is_open())
             {
                 outFile << fixed << setprecision(15);
-                isnan(loss_value) ? loss_value = 100 : 0;
+                isnan(loss_value) ? loss_value = 100 : 0; //checks if loss is NaN. If true sets loss_value to 100. Necessary for grid search; 
                 outFile << loss_value << endl;
                 outFile.close();
             }

@@ -48,7 +48,7 @@ public:
                                                    { return Eigen::internal::random<double>(0, 0); });
 
             bias.conservativeResize(rows);
-            bias.setConstant(1);
+            bias.setConstant(1); // Bias term;
 
             if (i != hidden_layers + 1)
             {
